@@ -141,6 +141,18 @@ h1{
   background:rgba(251,248,239,0.08);
 }
 .cursor-blink{ display:inline-block; animation:blink 1s steps(1) infinite; color:var(--gold-soft); }
+.header-cta{
+  display:inline-block; position:relative; z-index:1; margin:0 auto 1.8rem;
+  padding:0.65rem 1.15rem; border:1px solid var(--gold-soft);
+  background:linear-gradient(180deg, var(--blush) 0%, var(--blush-deep) 100%);
+  color:var(--moss-deep); font-family:'Space Mono', monospace; font-size:0.78rem;
+  font-weight:700; text-decoration:none; cursor:pointer;
+  box-shadow:4px 4px 0 rgba(43,42,28,0.35); transition:transform .2s, box-shadow .2s, background .2s;
+}
+.header-cta:hover, .header-cta:focus-visible{
+  background:linear-gradient(180deg, var(--gold-soft) 0%, var(--gold) 100%);
+  transform:translate(-2px,-2px); box-shadow:6px 6px 0 rgba(43,42,28,0.35); outline:none;
+}
 .contact-info{
   display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;
   font-size:0.8rem; color:var(--sage);
@@ -170,11 +182,23 @@ nav a:hover{
   color:var(--cream-text);
   box-shadow:0 0 12px rgba(212,168,87,0.5);
 }
+nav a.active, nav a[aria-selected="true"]{
+  background:linear-gradient(180deg, var(--gold) 0%, var(--moss) 100%);
+  color:var(--cream-text); border-color:var(--moss-deep);
+  box-shadow:inset 0 -2px 0 var(--moss-deep), 0 0 12px rgba(212,168,87,0.45);
+}
+nav a:focus-visible{ outline:2px solid var(--blush-deep); outline-offset:2px; }
 
 /* ---------- layout ---------- */
-.container{ max-width:1080px; margin:0 auto; padding:4.5rem 2rem; }
+.container{ max-width:1080px; margin:0 auto; padding:4.5rem 2rem; min-height:62vh; }
 section{ margin-bottom:5.5rem; }
 section:last-of-type{ margin-bottom:3rem; }
+.container.tabs-enabled section{ display:none; margin-bottom:3rem; }
+.container.tabs-enabled section.active-section{ display:block; animation:tab-in .32s ease-out; }
+@keyframes tab-in{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
 .section-head{ margin-bottom:2.2rem; }
 .section-num{
   font-family:'Press Start 2P', monospace; font-size:0.6rem;
@@ -328,26 +352,27 @@ html{ scroll-behavior:smooth; }
   <span class="star" style="top:52%;left:4%; animation-delay:.3s;">✦</span>
   <span class="star" style="top:45%;right:5%; animation-delay:1.9s;">✧</span>
 
-  <span class="eyebrow">[ SYSTEM ONLINE ]</span>
+  <!-- <span class="eyebrow">[ SYSTEM ONLINE ]</span>--> 
   <h1>AISHANI SAKALABHAKTULA</h1>
-  <p class="tagline">&gt; Computer Engineering :: Embedded Systems &amp; Bio-Design :: Music Producer</p>
-  <p class="thesis">building things at the intersection of embedded systems and bio-design — and occasionally getting hit by a truck and teleported into a fantasy world.<span class="cursor-blink">_</span></p>
+  <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Cafe Hopper</p>
+  <p class="thesis">building things at the intersection of embedded systems and bio-design! (Along with the occasional experimental fashion detour)<span class="cursor-blink">_</span></p>
+  <a class="header-cta" href="#projects" data-tab-target="projects">&gt; check out her projects!</a>
   <div class="contact-info">
     <span>(832) 805-2120</span>
-    <a href="mailto:asakalab@purdue.edu">asakalab@purdue.edu</a>
+    <a href="mailto:aishmaan0511@gmail.com">aishmaan0511@gmail.com</a>
     <span>Houston, TX</span>
     <a href="https://www.linkedin.com/in/aishanisakala-wis532005/" target="_blank">LinkedIn</a>
   </div>
 </header>
 
-<nav>
-  <a href="#about">about.exe</a>
-  <a href="#education">school.dll</a>
-  <a href="#experience">work_history.sys</a>
-  <a href="#projects">projects/</a>
-  <a href="#featured-projects">featured.zip</a>
-  <a href="#skills">skills.cfg</a>
-  <a href="#involvement">clubs.ini</a>
+<nav aria-label="Portfolio sections" role="tablist">
+  <a href="#about" role="tab">about.exe</a>
+  <a href="#education" role="tab">school.dll</a>
+  <a href="#experience" role="tab">work_history.sys</a>
+  <a href="#projects" role="tab">projects/</a>
+  <a href="#featured-projects" role="tab">featured.zip</a>
+  <a href="#skills" role="tab">skills.cfg</a>
+  <a href="#involvement" role="tab">clubs.ini</a>
 </nav>
 
 <div class="container">
@@ -610,6 +635,64 @@ html{ scroll-behavior:smooth; }
 </footer>
 
 <script>
+/* One-panel-at-a-time portfolio navigation. The hash keeps every tab linkable. */
+const portfolioContainer = document.querySelector('.container');
+const portfolioTabs = Array.from(document.querySelectorAll('nav [role="tab"]'));
+const portfolioSections = Array.from(portfolioContainer.querySelectorAll(':scope > section'));
+
+portfolioContainer.classList.add('tabs-enabled');
+
+function openPortfolioTab(sectionId, updateHash = true) {
+  const requestedSection = document.getElementById(sectionId);
+  const nextSection = portfolioSections.includes(requestedSection) ? requestedSection : portfolioSections[0];
+  portfolioSections.forEach(section => {
+    const isActive = section === nextSection;
+    section.classList.toggle('active-section', isActive);
+    section.hidden = !isActive;
+    section.setAttribute('role', 'tabpanel');
+    section.setAttribute('aria-labelledby', `tab-${section.id}`);
+  });
+  portfolioTabs.forEach(tab => {
+    const targetId = tab.hash.slice(1);
+    const isActive = targetId === nextSection.id;
+    tab.id = `tab-${targetId}`;
+    tab.classList.toggle('active', isActive);
+    tab.setAttribute('aria-selected', String(isActive));
+    tab.setAttribute('tabindex', isActive ? '0' : '-1');
+    tab.setAttribute('aria-controls', targetId);
+  });
+  if (updateHash) history.replaceState(null, '', `#${nextSection.id}`);
+}
+
+portfolioTabs.forEach((tab, index) => {
+  tab.addEventListener('click', event => {
+    event.preventDefault();
+    openPortfolioTab(tab.hash.slice(1));
+    portfolioContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  tab.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    let nextIndex = index;
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % portfolioTabs.length;
+    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + portfolioTabs.length) % portfolioTabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = portfolioTabs.length - 1;
+    portfolioTabs[nextIndex].focus();
+    portfolioTabs[nextIndex].click();
+  });
+});
+
+document.querySelectorAll('[data-tab-target]').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    openPortfolioTab(link.dataset.tabTarget);
+    portfolioContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+window.addEventListener('hashchange', () => openPortfolioTab(location.hash.slice(1), false));
+openPortfolioTab(location.hash.slice(1) || 'about', false);
 /* =========================================================================
    FEATURED PROJECTS DATA
    -------------------------------------------------------------------------
