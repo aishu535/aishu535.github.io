@@ -225,6 +225,14 @@ h2{
 .card ul{ list-style:none; }
 .card li{ position:relative; padding-left:1.4rem; margin-bottom:0.65rem; font-size:0.88rem; color:var(--ink); }
 .card li::before{ content:">"; position:absolute; left:0; color:var(--blush-deep); font-weight:700; }
+.research-link{
+  color:var(--moss-deep); font-weight:700; text-decoration:none;
+  border-bottom:1px dashed var(--blush-deep); transition:color .2s, border-color .2s, text-shadow .2s;
+}
+.research-link:hover, .research-link:focus-visible{
+  color:var(--blush-deep); border-bottom-color:var(--gold); text-shadow:0 0 8px rgba(227,155,174,0.3);
+  outline:none;
+}
 
 /* ---------- about ---------- */
 .about-card p{ font-size:0.95rem; }
@@ -236,16 +244,6 @@ h2{
   font-size:0.7rem; padding:0.3rem 0.75rem; border:1px solid var(--moss);
   color:var(--moss-deep); background:rgba(107,136,98,0.10); font-family:'Space Mono', monospace;
 }
-
-/* ---------- projects grid (overview) ---------- */
-.projects-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.6rem; }
-.project-card{ background:var(--paper); border:1px solid var(--line); box-shadow:0 12px 26px rgba(63,90,59,0.09); transition:transform .3s, box-shadow .3s; }
-.project-card:hover{ transform:translateY(-6px); box-shadow:0 0 22px rgba(227,155,174,0.28); }
-.project-card .card-body{ padding:1.7rem; }
-.project-card h3{ font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--moss-deep); margin-bottom:0.6rem; }
-.project-card .tools{ font-size:0.7rem; color:var(--leaf); font-weight:700; margin-bottom:0.9rem; letter-spacing:0.01em; }
-.project-card a.gh-link{ display:inline-block; margin-top:1rem; font-size:0.78rem; font-weight:700; color:var(--blush-deep); text-decoration:none; }
-.project-card a.gh-link:hover{ text-decoration:underline; }
 
 /* ---------- FEATURED / DETAILED PROJECTS ---------- */
 #featured-projects .intro-note{ font-size:0.88rem; color:var(--ink-soft); max-width:680px; margin-bottom:2rem; }
@@ -356,7 +354,7 @@ html{ scroll-behavior:smooth; }
   <h1>AISHANI SAKALABHAKTULA</h1>
   <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Cafe Hopper</p>
   <p class="thesis">building things at the intersection of embedded systems and bio-design! (Along with the occasional experimental fashion detour)<span class="cursor-blink">_</span></p>
-  <a class="header-cta" href="#projects" data-tab-target="projects">&gt; check out her projects!</a>
+  <a class="header-cta" href="#featured-projects" data-tab-target="featured-projects">&gt; check out her projects!</a>
   <div class="contact-info">
     <span>(832) 805-2120</span>
     <a href="mailto:aishmaan0511@gmail.com">aishmaan0511@gmail.com</a>
@@ -369,7 +367,6 @@ html{ scroll-behavior:smooth; }
   <a href="#about" role="tab">about.exe</a>
   <a href="#education" role="tab">school.dll</a>
   <a href="#experience" role="tab">work_history.sys</a>
-  <a href="#projects" role="tab">projects/</a>
   <a href="#featured-projects" role="tab">featured.zip</a>
   <a href="#skills" role="tab">skills.cfg</a>
   <a href="#involvement" role="tab">clubs.ini</a>
@@ -387,14 +384,13 @@ html{ scroll-behavior:smooth; }
       </div>
       <div class="card-body">
         <p>
-          Hi, I'm Aishani — comp eng student at Purdue, graduating 2027 (send good vibes). I basically live at
-          the intersection of embedded systems and bio-design, which sounds fancy but really just means I like
-          building stuff that actually helps people IRL. I've built proof-of-concept medical devices alongside
-          doctors at MD Anderson's IDEAS Lab, designed ETL pipelines for rare cancer genomics research, and once
-          programmed an entire embedded rhythm game from scratch just because I wanted to see if I could. Outside
-          of code, I'm probably making music as <strong>AiASHLA</strong> (117K+ listeners across 150+ countries,
-          still feels unreal to type that), leading graphic design for a fashion magazine, or in the middle of a
-          baking experiment that may or may not survive the oven.
+          Hi, I'm Aishani! I'm currently a computer engineering student at Purdue, graduating in May 2027 (yay!). I enjoy working 
+          at the intersection of embedded systems, biodesign, and psychology, which sounds fancy but really just means I like 
+          understanding people's needs and building things that actually help them IRL. I've built proof-of-concept medical devices 
+          alongside doctors and engineers at MD Anderson's IDEAS Lab, designed ETL pipelines for rare cancer genomics research, 
+          and programmed a hatsune-miku themed embedded rhythm-game keypad from scratch. Outside of computer engineering, I'm 
+          probably making jewelry or upcycling clothes, leading graphic design for a fashion magazine (FRO.m), creating a new 
+          workout plan for my friends (involving ourselves in machines we've never used)!
         </p>
       </div>
     </div>
@@ -406,12 +402,12 @@ html{ scroll-behavior:smooth; }
     <div class="card">
       <div class="win-titlebar">
         <span>school.dll</span>
-        <div class="win-btns"><span>_</span><span>□</span><span>×</span></div>
+        <div class="win-btns"><span>_</span><span>□</span><span>x</span></div>
       </div>
       <div class="card-body">
         <h3>Purdue University</h3>
         <div class="subtitle">B.S. Computer Engineering · AI/ML Concentration · Psychology Minor</div>
-        <div class="date-location">West Lafayette, IN · August 2023 – May 2027</div>
+        <div class="date-location">West Lafayette, IN · August 2023 - May 2027</div>
         <p class="edu-meta">GPA: 3.44</p>
         <div class="pill-row">
           <span class="pill">Engineering Education Research</span>
@@ -429,33 +425,37 @@ html{ scroll-behavior:smooth; }
     <div class="section-head"><span class="section-num">// 03</span><h2>WORK EXPERIENCE</h2></div>
 
     <div class="card">
-      <div class="win-titlebar"><span>ge_appliances.log</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="win-titlebar"><span>ge_appliances.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>GE Appliances</h3>
         <div class="subtitle">Embedded Systems Engineering Co-op (Accepted)</div>
-        <div class="date-location">Louisville, KY · August 2026 – December 2026</div>
+        <div class="date-location">Louisville, KY · August 2026 - December 2026</div>
+        <ul>
+          <li>Selected to support GE Appliances' Connected Team, contributing to embedded connectivity development and a BLE code rewrite for smart appliances using Wi-Fi, MQTT, and HTTP.</li>
+        </ul>
       </div>
     </div>
 
     <div class="card">
-      <div class="win-titlebar"><span>md_anderson_eir.log</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="win-titlebar"><span>md_anderson_eir.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>MD Anderson Cancer Center</h3>
         <div class="subtitle">Computer Engineering EIR, IDEAS Lab for Surgical Innovation</div>
-        <div class="date-location">Houston, TX · June 2026 – August 2026</div>
+        <div class="date-location">Houston, TX · June 2026 - August 2026</div>
         <ul>
-          <li>Led computer/electrical engineering development for six medical device projects spanning interventional radiology, EEG systems, orofacial sensing, and catheter devices using embedded C++ and Arduino-based hardware; contributed research and hardware debugging to an award-winning device project.</li>
+          <li>Led computer/electrical engineering development for six medical device projects spanning interventional radiology, EEG systems, orofacial sensing, and catheter devices using embedded C++ and Arduino-based hardware
+          <li>Contributed to research and hardware debugging for an award-winning assistive device designed to support orofacial sensing research.</li>
           <li>Observed 16 robotic and image-guided procedures and collaborated with physicians and multidisciplinary engineering teams to translate clinical needs into proof-of-concept embedded medical devices through the Stanford bio-design innovation process.</li>
         </ul>
       </div>
     </div>
 
     <div class="card">
-      <div class="win-titlebar"><span>md_anderson_data.log</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="win-titlebar"><span>md_anderson_data.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>MD Anderson Cancer Center</h3>
         <div class="subtitle">Data Engineering &amp; AI Intern, Genomic Medicine</div>
-        <div class="date-location">Houston, TX · June 2025 – August 2025</div>
+        <div class="date-location">Houston, TX · June 2025 - August 2025</div>
         <ul>
           <li>Used PySpark and NumPy within Palantir Foundry AIP Code Workbooks to design Python-based ETL pipelines that harmonize sample information forms and quality control tracker genomic datasets, and to build models and simulations for predictive analytics.</li>
           <li>Collaborated with genomic researchers and data engineers (Dr. Scott Woodman, Dr. Sabitha Prabhakaran, and Mark Knafl) to align data workflows with biological context, assay variability, and research objectives for rare cancer studies (Project Mosaic).</li>
@@ -464,61 +464,34 @@ html{ scroll-behavior:smooth; }
     </div>
 
     <div class="card">
-      <div class="win-titlebar"><span>purdue_it.log</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="win-titlebar"><span>purdue_it.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>Purdue University Libraries</h3>
         <div class="subtitle">IT Support Technician</div>
-        <div class="date-location">West Lafayette, IN · August 2024 – May 2025; August 2025 – May 2026</div>
+        <div class="date-location">West Lafayette, IN · August 2024 - May 2025; August 2025 - May 2026</div>
         <ul>
-          <li>Diagnosed and resolved hundreds of hardware, software, and network issues over time for Purdue faculty and staff, including system imaging, printer configuration, machine delivery and setup, and connectivity troubleshooting.</li>
+          <li>Diagnosed and resolved 100s of hardware, software, and network issues for over 2 years for Purdue faculty and staff, including system imaging, printer configuration, machine delivery and setup, and connectivity troubleshooting.</li>
         </ul>
       </div>
     </div>
 
     <div class="card">
-      <div class="win-titlebar"><span>research.log</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
+      <div class="win-titlebar"><span>research.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>Engineering Education Research — Purdue University</h3>
         <div class="subtitle">Research Assistant, Dr. Lisa Bosman</div>
-        <div class="date-location">West Lafayette, IN · January 2024 – December 2024</div>
+        <div class="date-location">West Lafayette, IN · January 2024 - December 2024</div>
         <ul>
-          <li>Co-authored the peer-reviewed paper "Lessons Learned: NSF REU Site – Growing Entrepreneurially Minded Researchers with New Product Development in Applied Energy," presented at the 2024 ASEE Conference.</li>
-          <li>Supported qualitative research and analysis for "Using Photovoice to Assess Technology Student Perceptions of Virtual Reality Inside and Outside the Classroom," and presented findings at the Purdue Undergraduate Research Conference.</li>
+          <li>Co-authored the peer-reviewed paper <a class="research-link" href="https://peer.asee.org/board-329-lessons-learned-nsf-reu-site-growing-entrepreneurially-minded-researchers-with-new-product-development-in-applied-energy" target="_blank" rel="noopener noreferrer">“Lessons Learned: NSF REU Site – Growing Entrepreneurially Minded Researchers with New Product Development in Applied Energy” ↗</a>, presented at the 2024 ASEE Conference.</li>
+          <li>Supported qualitative research and analysis for <a class="research-link" href="https://peer.asee.org/using-photovoice-to-assess-technology-student-perceptions-of-virtual-reality-inside-and-outside-the-classroom" target="_blank" rel="noopener noreferrer">“Using Photovoice to Assess Technology Student Perceptions of Virtual Reality Inside and Outside the Classroom” ↗</a>, and presented findings at the Purdue Undergraduate Research Conference.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS (overview) -->
-  <section id="projects">
-    <div class="section-head"><span class="section-num">// 04</span><h2>PROJECTS</h2></div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="win-titlebar"><span>maasive_miku.exe</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
-        <div class="card-body">
-          <h3>MAASive Miku: Embedded Rhythm Game</h3>
-          <div class="tools">C · RP2350 · I²C · SPI · DMA · PWM AUDIO · ADC · NEOTRELLIS · PLATFORMIO</div>
-          <p>Real-time embedded rhythm game built with the RP2350 microcontroller and Adafruit NeoTrellis keypad, with timing-accurate LED animations synced to DMA-driven PWM audio.</p>
-          <a class="gh-link" href="https://github.com/mridulan0/MAASive-Miku/tree/main" target="_blank">&gt; view_on_github</a>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="win-titlebar"><span>platformer.exe</span><div class="win-btns"><span>_</span><span>□</span><span>×</span></div></div>
-        <div class="card-body">
-          <h3>Unity 3D Platformer Game</h3>
-          <div class="tools">UNITY · C# · 3D ASSET INTEGRATION</div>
-          <p>"I got hit by a truck and teleported into a fantasy world?!" — a 3D adventure platformer with environmental exploration, mini-games, and obstacle-based mechanics, co-developed with a team of two.</p>
-        </div>
-      </div>
-    </div>
-    <p style="margin-top:1.2rem; font-size:0.85rem; color:var(--ink-soft);">
-      Want the full story on any of these? See <a href="#featured-projects" style="color:var(--blush-deep); font-weight:700;">featured.zip</a> below for in-depth write-ups.
-    </p>
-  </section>
-
   <!-- FEATURED / DETAILED PROJECTS — plug-in area #1 -->
   <section id="featured-projects">
-    <div class="section-head"><span class="section-num">// 05</span><h2>FEATURED PROJECTS, IN DEPTH</h2></div>
+    <div class="section-head"><span class="section-num">// 04</span><h2>FEATURED PROJECTS, IN DEPTH</h2></div>
     <p class="intro-note">
       Click a project to open it up. This section runs off the <code>projectData</code> array
       near the bottom of the page's code — look for
@@ -530,7 +503,7 @@ html{ scroll-behavior:smooth; }
 
   <!-- SKILLS -->
   <section id="skills">
-    <div class="section-head"><span class="section-num">// 06</span><h2>SKILLS &amp; EXPERTISE</h2></div>
+    <div class="section-head"><span class="section-num">// 05</span><h2>SKILLS &amp; EXPERTISE</h2></div>
     <div class="skills-container">
       <div class="skill-category">
         <div class="card-body">
@@ -603,7 +576,7 @@ html{ scroll-behavior:smooth; }
 
   <!-- INVOLVEMENT — plug-in area #2 (clickable links) -->
   <section id="involvement">
-    <div class="section-head"><span class="section-num">// 07</span><h2>CLUBS &amp; INTERESTS</h2></div>
+    <div class="section-head"><span class="section-num">// 06</span><h2>CLUBS &amp; INTERESTS</h2></div>
     <p class="intro-note" style="font-size:0.88rem; color:var(--ink-soft); max-width:680px; margin-bottom:1.6rem;">
       Each card below can link out to more info — a Spotify profile, a club website, an Instagram, whatever
       makes sense. This runs off the <code>involvementData</code> array in the code, right below the project
@@ -833,26 +806,29 @@ renderProjects();
      url    (string, optional)  — link to learn more
    ========================================================================= */
 const involvementData = [
+{
+    name: "Fashion and Retail Organization (FRO)",
+    role: "Graphic Design Lead",
+    desc: "Leading graphic design for FRO.m Magazine, bringing fashion journalism to life through visual storytelling.",
+    url: "https://frompurdue.substack.com/"
+  },  
   {
     name: "AiASHLA",
     role: "Self-taught music producer",
-    emoji: "🎧",
-    desc: "117K+ listeners across 150+ countries. Original productions and releases.",
-    url: null
+    desc: "Overall 117K+ yearly listeners across 150+ countries. Solo productions and releases.",
+    url: "https://open.spotify.com/artist/3oICt71chU9wj3e6T5hp71?si=F5uKnJqkTXaRbupV0NBpzg"
   },
   {
     name: "Sri Sathya Sai International Organization",
     role: "Website Update Volunteer",
-    emoji: "🌐",
     desc: "Managing WordPress updates for the South Houston branch.",
-    url: null
+    url: "https://sairegion10.org/welcome-to-south-houston/young-adults/"
   },
   {
-    name: "Fashion and Retail Organization (FRO)",
-    role: "Graphic Design Lead",
-    emoji: "🧵",
-    desc: "Leading graphic design for FRO.m Magazine, bringing fashion journalism to life through visual storytelling.",
-    url: null
+    name: "ECESS External Media Committee",
+    role: "Secretary & Graphic Designer",
+    desc: "Leading graphic design and meetings for ECESS meetings involving merch development and social media content for getting more electrical and computer engineers involved.",
+    url: "https://engineering.purdue.edu/ECESS"
   }
 
   /* ============================================================
