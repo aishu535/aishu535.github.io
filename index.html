@@ -262,13 +262,19 @@ h2{
 .detail-toggle{ font-size:1.1rem; color:var(--moss); transition:transform .3s; font-family:monospace; }
 .detail-head[aria-expanded="true"] .detail-toggle{ transform:rotate(45deg); }
 .detail-body{ max-height:0; overflow:hidden; transition:max-height .45s ease, padding .45s ease; padding:0 1.6rem; background:rgba(228,237,217,0.4); }
-.detail-body.open{ max-height:1200px; padding:1.5rem 1.6rem 1.8rem; border-top:1px solid var(--line); }
+.detail-body.open{ max-height:2000px; padding:1.5rem 1.6rem 1.8rem; border-top:1px solid var(--line); }
 .detail-body .tools-line{ font-size:0.72rem; color:var(--leaf); font-weight:700; margin-bottom:1rem; }
 .detail-body .media-slot{
   width:100%; min-height:160px; border:1.5px dashed var(--moss);
   background:rgba(107,136,98,0.06); display:flex; align-items:center; justify-content:center;
   color:var(--ink-soft); font-size:0.78rem; margin-bottom:1.2rem; text-align:center; padding:1rem;
 }
+/* real working iframe embeds (e.g. Google Drive video) */
+.embed-frame{
+  position:relative; width:100%; padding-top:56.25%; margin:0 0 1.2rem;
+  background:#000; border:1px solid var(--line); overflow:hidden;
+}
+.embed-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 .detail-body ul{ list-style:none; margin-bottom:1rem; }
 .detail-body li{ position:relative; padding-left:1.4rem; margin-bottom:0.6rem; font-size:0.86rem; color:var(--ink); }
 .detail-body li::before{ content:"»"; position:absolute; left:0; color:var(--blush-deep); }
@@ -297,23 +303,38 @@ h2{
 }
 .tag:hover{ background:linear-gradient(180deg, var(--gold) 0%, var(--moss) 100%); color:var(--cream-text); box-shadow:0 0 10px rgba(212,168,87,0.45); }
 
-/* ---------- involvement (clickable) ---------- */
-.involve-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1.5rem; }
-.involve-card{ background:var(--paper); border:1px solid var(--line); box-shadow:0 10px 24px rgba(63,90,59,0.08); transition:transform .3s, box-shadow .3s; }
+/* ---------- involvement (clickable, evenly organized 2-up grid) ---------- */
+.involve-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:1.5rem;
+  align-items:stretch;
+}
+@media (max-width:680px){
+  .involve-grid{ grid-template-columns:1fr; }
+}
+.involve-card{
+  background:var(--paper); border:1px solid var(--line); box-shadow:0 10px 24px rgba(63,90,59,0.08);
+  transition:transform .3s, box-shadow .3s; display:flex; flex-direction:column;
+}
 .involve-card:hover{ transform:translateY(-4px); box-shadow:0 0 20px rgba(124,184,107,0.25); }
-.involve-card .card-body{ padding:1.5rem 1.6rem; }
+.involve-card .card-body{
+  padding:1.5rem 1.6rem; display:flex; flex-direction:column; height:100%;
+}
 .involve-emoji{ font-size:1.5rem; display:block; margin-bottom:0.5rem; }
 .involve-card h3{ font-family:'Orbitron', sans-serif; font-size:1rem; color:var(--moss-deep); margin-bottom:0.3rem; }
 .involve-card .role{ font-size:0.78rem; color:var(--leaf); font-weight:700; margin-bottom:0.6rem; }
-.involve-card p{ font-size:0.84rem; color:var(--ink); margin-bottom:0.9rem; }
+.involve-card p{ font-size:0.84rem; color:var(--ink); margin-bottom:0.9rem; flex:1; }
 .involve-card a.explore-link{
-  display:inline-block; font-size:0.76rem; font-weight:700; color:var(--cream-text);
+  display:inline-block; align-self:flex-start; margin-top:auto;
+  font-size:0.76rem; font-weight:700; color:var(--cream-text);
   background:var(--blush-deep); padding:0.35rem 0.9rem; text-decoration:none;
   transition:box-shadow .25s;
 }
 .involve-card a.explore-link:hover{ box-shadow:0 0 14px rgba(227,155,174,0.6); }
 .involve-card .no-link-note{
-  display:inline-block; font-size:0.72rem; font-style:italic; color:var(--ink-soft);
+  display:inline-block; align-self:flex-start; margin-top:auto;
+  font-size:0.72rem; font-style:italic; color:var(--ink-soft);
   border:1px dashed var(--moss); padding:0.3rem 0.75rem;
 }
 
@@ -350,7 +371,7 @@ html{ scroll-behavior:smooth; }
   <span class="star" style="top:52%;left:4%; animation-delay:.3s;">✦</span>
   <span class="star" style="top:45%;right:5%; animation-delay:1.9s;">✧</span>
 
-  <!-- <span class="eyebrow">[ SYSTEM ONLINE ]</span>--> 
+  <!-- <span class="eyebrow">[ SYSTEM ONLINE ]</span>-->
   <h1>AISHANI SAKALABHAKTULA</h1>
   <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Cafe Hopper</p>
   <p class="thesis">building things at the intersection of embedded systems and bio-design! (Along with the occasional experimental fashion detour)<span class="cursor-blink">_</span></p>
@@ -384,12 +405,12 @@ html{ scroll-behavior:smooth; }
       </div>
       <div class="card-body">
         <p>
-          Hi, I'm Aishani! I'm currently a computer engineering student at Purdue, graduating in May 2027 (yay!). I enjoy working 
-          at the intersection of embedded systems, biodesign, and psychology, which sounds fancy but really just means I like 
-          understanding people's needs and building things that actually help them IRL. I've built proof-of-concept medical devices 
-          alongside doctors and engineers at MD Anderson's IDEAS Lab, designed ETL pipelines for rare cancer genomics research, 
-          and programmed a hatsune-miku themed embedded rhythm-game keypad from scratch. Outside of computer engineering, I'm 
-          probably making jewelry or upcycling clothes, leading graphic design for a fashion magazine (FRO.m), creating a new 
+          Hi, I'm Aishani! I'm currently a computer engineering student at Purdue, graduating in May 2027 (yay!). I enjoy working
+          at the intersection of embedded systems, biodesign, and psychology, which sounds fancy but really just means I like
+          understanding people's needs and building things that actually help them IRL. I've built proof-of-concept medical devices
+          alongside doctors and engineers at MD Anderson's IDEAS Lab, designed ETL pipelines for rare cancer genomics research,
+          and programmed a hatsune-miku themed embedded rhythm-game keypad from scratch. Outside of computer engineering, I'm
+          probably making jewelry or upcycling clothes, leading graphic design for a fashion magazine (FRO.m), creating a new
           workout plan for my friends (involving ourselves in machines we've never used)!
         </p>
       </div>
@@ -496,7 +517,10 @@ html{ scroll-behavior:smooth; }
       Click a project to open it up. This section runs off the <code>projectData</code> array
       near the bottom of the page's code — look for
       <strong>"⚙️ ADD YOUR PROJECT CONTENT HERE"</strong> if you want to add write-ups,
-      screenshots, demo videos, or links later.
+      screenshots, demo videos, or links later. Real embeds (like the LinkedIn post and Google
+      Drive video below) use an <code>embed</code> field with the actual iframe HTML, plus
+      optional <code>embedAspect</code>/<code>embedMaxWidth</code> fields if the embed isn't a
+      standard 16:9 box.
     </p>
     <div id="detailed-projects-container"><!-- rendered by JS below --></div>
   </section>
@@ -682,23 +706,32 @@ openPortfolioTab(location.hash.slice(1) || 'about', false);
      description  (string)
      highlights   (array of strings)
      links        (array of {label, url}, optional)
-     mediaNote    (string, optional) — placeholder text for the media slot
+     mediaNote    (string, optional) — placeholder text shown if there's no real embed
+     embed        (string, optional) — raw HTML (usually an <iframe>) for a real, working
+                                        embed. When present, this replaces the mediaNote
+                                        placeholder with the actual embedded content.
    ========================================================================= */
 const projectData = [
   {
     title: "MAASive Miku: Embedded Rhythm Game",
     status: "team of 4 · ECE 362",
     tools: "C · RP2350 Microcontroller · I²C · SPI · DMA · PWM Audio · ADC · NeoTrellis · PlatformIO",
-    description: "A real-time embedded rhythm game built for the RP2350 microcontroller and an Adafruit NeoTrellis keypad, built as part of Purdue's ECE 362 Embedded Systems course.",
+    description: "A Hatsune Miku-themed, real-time embedded rhythm game built for the RP2350 microcontroller and an Adafruit NeoTrellis keypad, built as part of Purdue's ECE 362 Embedded Systems course.",
     highlights: [
       "Programmed low-level I²C communication with the Seesaw co-processor to decode keypad input and control 16 NeoPixel LEDs.",
       "Developed timing-accurate LED animations synchronized with audio playback using DMA-driven PWM, ensuring consistent real-time performance.",
       "Worked in a team of four to integrate hardware input, LED feedback, and audio timing into one cohesive game loop."
     ],
     links: [
-      { label: "View on GitHub", url: "https://github.com/mridulan0/MAASive-Miku/tree/main" }
+      { label: "View on GitHub", url: "https://github.com/mridulan0/MAASive-Miku/tree/main" },
+      { label: "View LinkedIn Post", url: "https://lnkd.in/p/gSsxeaqF" }
     ],
-    mediaNote: "Add a demo GIF, gameplay video, or hardware photo here"
+    // Real LinkedIn embed, pulled from the post's ••• menu → "Embed this post". LinkedIn's
+    // embed is a fixed-size iframe (504x1099 here), so embedMaxWidth + embedAspect keep it
+    // at its natural portrait proportions instead of getting stretched into a 16:9 box.
+    embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7410007205367967745" allowfullscreen title="Embedded post"></iframe>',
+    embedMaxWidth: "504px",
+    embedAspect: "218%"
   },
   {
     title: "Unity 3D Platformer Game",
@@ -710,16 +743,31 @@ const projectData = [
       "Co-developed level design and obstacle mechanics with a teammate from concept through playable build."
     ],
     links: [
-      { label: "a mini gameplay video!", url: "https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/view?usp=sharing" }
-    ]
+      { label: "Full gameplay video", url: "https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/view?usp=sharing" }
+    ],
+    embed: '<iframe src="https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/preview" allow="autoplay" allowfullscreen></iframe>'
+  },
+  {
+    title: "FRO.m Magazine — Graphic Design",
+    status: "Fashion and Retail Organization (FRO)",
+    tools: "Graphic Design · Editorial Layout · Figma · Affinity",
+    description: "FRO.m is Purdue's student-run fashion magazine, published on Substack. I'm on the graphic design team, working on the visuals that bring each issue's fashion journalism to life — from layout to illustration to photo editing.",
+    highlights: [
+      "Designed graphics and visual layouts for FRO.m Magazine issues, translating written fashion journalism into cohesive visual storytelling.",
+      "Collaborated with writers and editors to make sure each piece's design matched its tone and subject."
+    ],
+    links: [
+      { label: "Read FRO.m on Substack", url: "https://frompurdue.substack.com/" }
+    ],
+    mediaNote: "Add a favorite spread or cover you designed here"
   }
 
   /* ============================================================
      ⚙️  ADD YOUR PROJECT CONTENT HERE
      ------------------------------------------------------------
      Copy the block below, fill it in, and add a comma above it
-     to attach it to the array. status, links, and mediaNote are
-     all optional — delete the ones you don't need.
+     to attach it to the array. status, links, mediaNote, and
+     embed are all optional — delete the ones you don't need.
 
   ,{
     title: "Your Project Title",
@@ -735,7 +783,8 @@ const projectData = [
       { label: "View on GitHub", url: "https://github.com/your-repo" },
       { label: "Live Demo", url: "https://your-demo-link.com" }
     ],
-    mediaNote: "Add a screenshot, demo video, or diagram here"
+    mediaNote: "Add a screenshot, demo video, or diagram here",
+    embed: '<iframe src="https://your-embed-url" allow="autoplay" allowfullscreen></iframe>'
   }
   ============================================================ */
 ];
@@ -757,6 +806,15 @@ function renderProjects() {
       .map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label} →</a>`)
       .join('');
 
+    let mediaHtml;
+    if (proj.embed) {
+      const aspect = proj.embedAspect || '56.25%';
+      const maxWidth = proj.embedMaxWidth ? `max-width:${proj.embedMaxWidth}; margin-left:auto; margin-right:auto;` : '';
+      mediaHtml = `<div class="embed-frame" style="padding-top:${aspect}; ${maxWidth}">${proj.embed}</div>`;
+    } else {
+      mediaHtml = `<div class="media-slot">${proj.mediaNote || 'Add an image or video here'}</div>`;
+    }
+
     card.innerHTML = `
       <div class="detail-head" role="button" tabindex="0" aria-expanded="false" data-index="${i}">
         <h3>${proj.title}</h3>
@@ -767,7 +825,7 @@ function renderProjects() {
       </div>
       <div class="detail-body" data-index="${i}">
         <div class="tools-line">${proj.tools || ''}</div>
-        <div class="media-slot">${proj.mediaNote || 'Add an image or video here'}</div>
+        ${mediaHtml}
         <p style="margin-bottom:1rem;">${proj.description || ''}</p>
         <ul>${(proj.highlights || []).map(h => `<li>${h}</li>`).join('')}</ul>
         ${linksHtml ? `<div class="links-row">${linksHtml}</div>` : ''}
@@ -795,11 +853,9 @@ renderProjects();
 /* =========================================================================
    INVOLVEMENT DATA — Clubs & Interests, each with an optional link
    -------------------------------------------------------------------------
-   Every card in "Clubs & Interests" is generated from this array. Add a
-   "url" field to any entry to turn its card into a clickable link (e.g. to
-   a Spotify profile, a club site, an Instagram). Leave "url" out (or set
-   it to null) and the card will just show a friendly "add a link!" note
-   instead of a button — nothing breaks either way.
+   Every card in "Clubs & Interests" is generated from this array, laid out
+   in an even 2-column grid with equal-height cards (buttons all line up
+   along the bottom no matter how long each description is).
 
    Fields:
      name   (string)            — club/activity name
@@ -809,29 +865,33 @@ renderProjects();
      url    (string, optional)  — link to learn more
    ========================================================================= */
 const involvementData = [
-{
+  {
     name: "Fashion and Retail Organization (FRO)",
     role: "Graphic Design Lead",
+    emoji: "🧵",
     desc: "Leading graphic design for FRO.m Magazine, bringing fashion journalism to life through visual storytelling.",
     url: "https://frompurdue.substack.com/"
-  },  
+  },
+  {
+    name: "ECESS External Media Committee",
+    role: "Secretary & Graphic Designer",
+    emoji: "📣",
+    desc: "Leading graphic design and meetings for ECESS, involving merch development and social media content to get more electrical and computer engineers involved.",
+    url: "https://engineering.purdue.edu/ECESS"
+  },
   {
     name: "AiASHLA",
     role: "Self-taught music producer",
-    desc: "Overall 117K+ yearly listeners across 150+ countries. Solo productions and releases.",
+    emoji: "🎧",
+    desc: "117K+ yearly listeners across 150+ countries. Solo productions and releases.",
     url: "https://open.spotify.com/artist/3oICt71chU9wj3e6T5hp71?si=F5uKnJqkTXaRbupV0NBpzg"
   },
   {
     name: "Sri Sathya Sai International Organization",
     role: "Website Update Volunteer",
+    emoji: "🌐",
     desc: "Managing WordPress updates for the South Houston branch.",
     url: "https://sairegion10.org/welcome-to-south-houston/young-adults/"
-  },
-  {
-    name: "ECESS External Media Committee",
-    role: "Secretary & Graphic Designer",
-    desc: "Leading graphic design and meetings for ECESS meetings involving merch development and social media content for getting more electrical and computer engineers involved.",
-    url: "https://engineering.purdue.edu/ECESS"
   }
 
   /* ============================================================
@@ -842,6 +902,8 @@ const involvementData = [
 
      To add a brand new club/activity card, copy the block below,
      fill it in, and add a comma above it to attach it to the array.
+     With 4 cards the grid stays a neat 2x2 — adding a 5th will wrap
+     to a 3rd row, still evenly spaced.
 
   ,{
     name: "Club or Activity Name",
