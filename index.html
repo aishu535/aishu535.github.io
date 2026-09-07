@@ -272,7 +272,7 @@ h2{
 /* real working iframe embeds (e.g. Google Drive video) */
 .embed-frame{
   position:relative; width:100%; padding-top:56.25%; margin:0 0 1.2rem;
-  background:#000; border:1px solid var(--line); overflow:hidden;
+  background:var(--sage); border:1px solid var(--line); overflow:hidden;
 }
 .embed-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 .detail-body ul{ list-style:none; margin-bottom:1rem; }
@@ -729,9 +729,9 @@ const projectData = [
     // Real LinkedIn embed, pulled from the post's ••• menu → "Embed this post". LinkedIn's
     // embed is a fixed-size iframe (504x1099 here), so embedMaxWidth + embedAspect keep it
     // at its natural portrait proportions instead of getting stretched into a 16:9 box.
-    embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7410007205367967745" allowfullscreen title="Embedded post"></iframe>',
+    embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7410007205367967745?collapsed=1" allowfullscreen title="Embedded post"></iframe>',
     embedMaxWidth: "504px",
-    embedAspect: "218%"
+    embedAspect: "193%"
   },
   {
     title: "Unity 3D Platformer Game",
@@ -808,9 +808,11 @@ function renderProjects() {
 
     let mediaHtml;
     if (proj.embed) {
-      const aspect = proj.embedAspect || '56.25%';
       const maxWidth = proj.embedMaxWidth ? `max-width:${proj.embedMaxWidth}; margin-left:auto; margin-right:auto;` : '';
-      mediaHtml = `<div class="embed-frame" style="padding-top:${aspect}; ${maxWidth}">${proj.embed}</div>`;
+      const sizing = proj.embedCropHeight
+        ? `padding-top:0; height:${proj.embedCropHeight};`
+        : `padding-top:${proj.embedAspect || '56.25%'};`;
+      mediaHtml = `<div class="embed-frame" style="${sizing} ${maxWidth}">${proj.embed}</div>`;
     } else {
       mediaHtml = `<div class="media-slot">${proj.mediaNote || 'Add an image or video here'}</div>`;
     }
@@ -868,28 +870,28 @@ const involvementData = [
   {
     name: "Fashion and Retail Organization (FRO)",
     role: "Graphic Design Lead",
-    emoji: "🧵",
+    //emoji: "🧵",
     desc: "Leading graphic design for FRO.m Magazine, bringing fashion journalism to life through visual storytelling.",
     url: "https://frompurdue.substack.com/"
   },
   {
     name: "ECESS External Media Committee",
     role: "Secretary & Graphic Designer",
-    emoji: "📣",
+    //emoji: "📣",
     desc: "Leading graphic design and meetings for ECESS, involving merch development and social media content to get more electrical and computer engineers involved.",
     url: "https://engineering.purdue.edu/ECESS"
   },
   {
     name: "AiASHLA",
     role: "Self-taught music producer",
-    emoji: "🎧",
+    //emoji: "🎧",
     desc: "117K+ yearly listeners across 150+ countries. Solo productions and releases.",
     url: "https://open.spotify.com/artist/3oICt71chU9wj3e6T5hp71?si=F5uKnJqkTXaRbupV0NBpzg"
   },
   {
     name: "Sri Sathya Sai International Organization",
     role: "Website Update Volunteer",
-    emoji: "🌐",
+    //emoji: "🌐",
     desc: "Managing WordPress updates for the South Houston branch.",
     url: "https://sairegion10.org/welcome-to-south-houston/young-adults/"
   }
