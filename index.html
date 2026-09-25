@@ -368,20 +368,41 @@ footer .sign-off{ font-family:'Press Start 2P', monospace; font-size:0.7rem; col
 }
 html{ scroll-behavior:smooth; }
 
-/* ---------- retro music player (Winamp-style Spotify widget) ---------- */
-#music-widget{ position:fixed; bottom:1.4rem; right:1.4rem; z-index:9997; font-family:'Space Mono', monospace; }
-.music-toggle-btn{
-  width:52px; height:52px; border-radius:50%; border:2px solid var(--gold-soft);
-  background:linear-gradient(180deg, var(--blush) 0%, var(--blush-deep) 100%);
-  font-size:1.3rem; box-shadow:4px 4px 0 rgba(43,42,28,0.35); transition:transform .2s, box-shadow .2s;
+/* ---------- retro music player (vinyl slide-out Spotify widget) ---------- */
+#music-widget{
+  position:fixed; top:50%; right:0; transform:translateY(-50%); z-index:9997;
+  font-family:'Space Mono', monospace; display:flex; align-items:center;
 }
-.music-toggle-btn:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 rgba(43,42,28,0.35); }
-.retro-player{
-  position:absolute; bottom:64px; right:0; width:300px;
+.vinyl-tab{
+  width:64px; height:64px; border-radius:50% 0 0 50%; flex:none;
+  background:linear-gradient(135deg, #2b2a28 0%, #131211 100%);
+  border:2px solid var(--gold-soft); border-right:none;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:-4px 4px 12px rgba(43,42,28,0.35); position:relative; z-index:2;
+  transition:transform .25s;
+}
+.vinyl-tab:hover{ transform:translateX(-4px); }
+.vinyl-disc{
+  width:46px; height:46px; border-radius:50%; position:relative;
+  background:
+    repeating-radial-gradient(circle at center, #3a3a3a 0px, #3a3a3a 1.5px, #161616 1.5px, #161616 3.5px);
+  animation:vinyl-spin 3.2s linear infinite;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,0.05);
+}
+.vinyl-disc::after{
+  content:''; position:absolute; inset:0; margin:auto; width:16px; height:16px;
+  border-radius:50%; background:var(--blush-deep); box-shadow:0 0 6px rgba(227,155,174,0.7);
+}
+@keyframes vinyl-spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+.vinyl-panel{
+  position:absolute; top:50%; right:56px; transform:translate(30px,-50%);
+  width:280px; opacity:0; pointer-events:none;
   background:var(--paper); border:1px solid var(--line);
-  box-shadow:0 12px 30px rgba(63,90,59,0.25);
-  animation:tab-in .25s ease-out;
+  box-shadow:-8px 8px 0 rgba(43,42,28,0.3);
+  transition:transform .4s cubic-bezier(.2,.8,.3,1), opacity .3s ease;
 }
+#music-widget.open .vinyl-panel{ transform:translate(0,-50%); opacity:1; pointer-events:auto; }
+#music-widget.open .vinyl-disc{ animation-duration:1.4s; }
 .retro-player-body{ padding:0.9rem 1rem 1.1rem; }
 .eq-bars{ display:flex; align-items:flex-end; gap:4px; height:26px; margin-bottom:0.6rem; }
 .eq-bars span{
@@ -402,6 +423,16 @@ html{ scroll-behavior:smooth; }
   letter-spacing:0.03em; margin-bottom:0.7rem;
 }
 .player-embed{ padding-top:0; height:152px; border:1px solid var(--line); }
+
+/* ---------- fake boot sequence ---------- */
+#boot-screen{
+  position:fixed; inset:0; z-index:99999;
+  background:linear-gradient(180deg, var(--moss-deep) 0%, #1f2b1c 100%);
+  color:var(--gold-soft); font-family:'Space Mono', monospace; font-size:0.9rem;
+  padding:3rem; transition:opacity .6s ease;
+}
+#boot-screen.boot-done{ opacity:0; pointer-events:none; }
+#boot-text{ white-space:pre-wrap; }
 </style>
 </head>
 <body>
@@ -416,8 +447,8 @@ html{ scroll-behavior:smooth; }
 
   <!-- <span class="eyebrow">[ SYSTEM ONLINE ]</span>-->
   <h1>AISHANI SAKALABHAKTULA</h1>
-  <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Cafe Hopper</p>
-  <p class="thesis">building things at the intersection of embedded systems and bio-design! (Along with the occasional experimental fashion detour)<span class="cursor-blink">_</span></p>
+  <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Creative Designer</p>
+  <p class="thesis">building things at the intersection of embedded systems and bio-design! (with the occasional cafe break ofc)<span class="cursor-blink">_</span></p>
   <a class="header-cta" href="#featured-projects" data-tab-target="featured-projects">&gt; check out her projects!</a>
   <div class="contact-info">
     <span>(832) 805-2120</span>
@@ -669,8 +700,10 @@ html{ scroll-behavior:smooth; }
 </footer>
 
 <div id="music-widget">
-  <button id="music-toggle" class="music-toggle-btn" aria-label="Open music player" aria-expanded="false">🎵</button>
-  <div id="music-player" class="retro-player" hidden>
+  <div id="music-toggle" class="vinyl-tab" role="button" tabindex="0" aria-label="Open music player" aria-expanded="false">
+    <div class="vinyl-disc"></div>
+  </div>
+  <div id="music-player" class="vinyl-panel">
     <div class="win-titlebar">
       <span>aiashla_radio.exe</span>
       <div class="win-btns"><span id="music-close">×</span></div>
@@ -684,6 +717,8 @@ html{ scroll-behavior:smooth; }
     </div>
   </div>
 </div>
+
+<div id="boot-screen"><pre id="boot-text"></pre></div>
 
 <script>
 /* One-panel-at-a-time portfolio navigation. The hash keeps every tab linkable. */
@@ -1091,25 +1126,68 @@ renderInvolvement();
   });
 })();
 
-/* Retro music player widget toggle. */
+/* Vinyl music player widget toggle. */
 (function () {
+  const widget = document.getElementById('music-widget');
   const toggleBtn = document.getElementById('music-toggle');
-  const player = document.getElementById('music-player');
   const closeBtn = document.getElementById('music-close');
 
   function openPlayer() {
-    player.hidden = false;
+    widget.classList.add('open');
     toggleBtn.setAttribute('aria-expanded', 'true');
   }
   function closePlayer() {
-    player.hidden = true;
+    widget.classList.remove('open');
     toggleBtn.setAttribute('aria-expanded', 'false');
   }
 
   toggleBtn.addEventListener('click', () => {
-    player.hidden ? openPlayer() : closePlayer();
+    widget.classList.contains('open') ? closePlayer() : openPlayer();
+  });
+  toggleBtn.addEventListener('keypress', e => {
+    if (e.key === 'Enter' || e.key === ' ') toggleBtn.click();
   });
   closeBtn.addEventListener('click', closePlayer);
+})();
+
+/* Fake terminal boot sequence, shown once per browser session. */
+(function () {
+  const bootScreen = document.getElementById('boot-screen');
+  const bootText = document.getElementById('boot-text');
+  if (!bootScreen) return;
+  if (sessionStorage.getItem('bootShown')) { bootScreen.remove(); return; }
+
+  const lines = [
+    '> SYSTEM BOOT ...',
+    '> loading embedded_systems.dll ... OK',
+    '> loading bio_design.sys ... OK',
+    '> loading caffeine_reserves.exe ... OK',
+    '> initializing whimsy.dll ... OK',
+    '> AISHANI_OS ready.'
+  ];
+  let completed = '';
+  let lineIndex = 0, charIndex = 0;
+
+  function typeStep() {
+    if (lineIndex >= lines.length) {
+      sessionStorage.setItem('bootShown', '1');
+      setTimeout(() => bootScreen.classList.add('boot-done'), 500);
+      setTimeout(() => bootScreen.remove(), 1200);
+      return;
+    }
+    const line = lines[lineIndex];
+    charIndex++;
+    bootText.textContent = completed + line.slice(0, charIndex);
+    if (charIndex >= line.length) {
+      completed += line + '\n';
+      lineIndex++;
+      charIndex = 0;
+      setTimeout(typeStep, 220);
+    } else {
+      setTimeout(typeStep, 18);
+    }
+  }
+  typeStep();
 })();
 </script>
 
