@@ -58,6 +58,14 @@ body::before{
 a{ color:inherit; }
 code{ font-family:'Space Mono', monospace; color:var(--moss-deep); background:var(--sage); padding:0 0.3em; }
 
+/* custom sparkle cursor, with a gold wand version over anything clickable */
+body{
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath d='M12 0 L14 9 L24 12 L14 15 L12 24 L10 15 L0 12 L10 9 Z' fill='%23E39BAE'/%3E%3C/svg%3E") 11 11, auto;
+}
+a, button, [role="tab"], .header-cta, .detail-head, .tag, .explore-link, .research-link, .card, .involve-card{
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath d='M12 0 L14 9 L24 12 L14 15 L12 24 L10 15 L0 12 L10 9 Z' fill='%23D3A857'/%3E%3C/svg%3E") 11 11, pointer;
+}
+
 @keyframes blink{
   0%,49%{ opacity:1; }
   50%,100%{ opacity:0; }
@@ -359,6 +367,41 @@ footer .sign-off{ font-family:'Press Start 2P', monospace; font-size:0.7rem; col
   nav{ gap:0.4rem; }
 }
 html{ scroll-behavior:smooth; }
+
+/* ---------- retro music player (Winamp-style Spotify widget) ---------- */
+#music-widget{ position:fixed; bottom:1.4rem; right:1.4rem; z-index:9997; font-family:'Space Mono', monospace; }
+.music-toggle-btn{
+  width:52px; height:52px; border-radius:50%; border:2px solid var(--gold-soft);
+  background:linear-gradient(180deg, var(--blush) 0%, var(--blush-deep) 100%);
+  font-size:1.3rem; box-shadow:4px 4px 0 rgba(43,42,28,0.35); transition:transform .2s, box-shadow .2s;
+}
+.music-toggle-btn:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 rgba(43,42,28,0.35); }
+.retro-player{
+  position:absolute; bottom:64px; right:0; width:300px;
+  background:var(--paper); border:1px solid var(--line);
+  box-shadow:0 12px 30px rgba(63,90,59,0.25);
+  animation:tab-in .25s ease-out;
+}
+.retro-player-body{ padding:0.9rem 1rem 1.1rem; }
+.eq-bars{ display:flex; align-items:flex-end; gap:4px; height:26px; margin-bottom:0.6rem; }
+.eq-bars span{
+  width:5px; background:linear-gradient(180deg, var(--gold) 0%, var(--blush-deep) 100%);
+  animation:eq-bounce 0.9s ease-in-out infinite;
+}
+.eq-bars span:nth-child(1){ animation-delay:0s; }
+.eq-bars span:nth-child(2){ animation-delay:.15s; }
+.eq-bars span:nth-child(3){ animation-delay:.3s; }
+.eq-bars span:nth-child(4){ animation-delay:.45s; }
+.eq-bars span:nth-child(5){ animation-delay:.6s; }
+@keyframes eq-bounce{
+  0%,100%{ height:6px; }
+  50%{ height:24px; }
+}
+.player-label{
+  font-family:'Press Start 2P', monospace; font-size:0.6rem; color:var(--blush-deep);
+  letter-spacing:0.03em; margin-bottom:0.7rem;
+}
+.player-embed{ padding-top:0; height:152px; border:1px solid var(--line); }
 </style>
 </head>
 <body>
@@ -624,6 +667,23 @@ html{ scroll-behavior:smooth; }
   <p>© 2026 Aishani Sakalabhaktula</p>
   <p>Purdue University · Computer Engineering · Class of 2027</p>
 </footer>
+
+<div id="music-widget">
+  <button id="music-toggle" class="music-toggle-btn" aria-label="Open music player" aria-expanded="false">🎵</button>
+  <div id="music-player" class="retro-player" hidden>
+    <div class="win-titlebar">
+      <span>aiashla_radio.exe</span>
+      <div class="win-btns"><span id="music-close">×</span></div>
+    </div>
+    <div class="retro-player-body">
+      <div class="eq-bars"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="player-label">NOW PLAYING: AiASHLA</div>
+      <div class="embed-frame player-embed">
+        <iframe src="https://open.spotify.com/embed/artist/3oICt71chU9wj3e6T5hp71?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* One-panel-at-a-time portfolio navigation. The hash keeps every tab linkable. */
@@ -1009,6 +1069,47 @@ renderInvolvement();
     requestAnimationFrame(animate);
   }
   animate();
+})();
+</script>
+
+<script>
+/* Parallax twinkle-stars: subtle drift toward the cursor within the header. */
+(function () {
+  const headerEl = document.querySelector('header');
+  const stars = Array.from(document.querySelectorAll('header .star'));
+  headerEl.addEventListener('mousemove', e => {
+    const rect = headerEl.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    stars.forEach((star, i) => {
+      const depth = 8 + (i % 3) * 6;
+      star.style.transform = `translate(${relX * depth}px, ${relY * depth}px)`;
+    });
+  });
+  headerEl.addEventListener('mouseleave', () => {
+    stars.forEach(star => { star.style.transform = 'translate(0,0)'; });
+  });
+})();
+
+/* Retro music player widget toggle. */
+(function () {
+  const toggleBtn = document.getElementById('music-toggle');
+  const player = document.getElementById('music-player');
+  const closeBtn = document.getElementById('music-close');
+
+  function openPlayer() {
+    player.hidden = false;
+    toggleBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closePlayer() {
+    player.hidden = true;
+    toggleBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    player.hidden ? openPlayer() : closePlayer();
+  });
+  closeBtn.addEventListener('click', closePlayer);
 })();
 </script>
 
