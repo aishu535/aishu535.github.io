@@ -368,7 +368,7 @@ footer .sign-off{ font-family:'Press Start 2P', monospace; font-size:0.7rem; col
 }
 html{ scroll-behavior:smooth; }
 
-/* ---------- retro music player (vinyl slide-out Spotify widget) ---------- */
+/* ---------- retro music player (vinyl trigger + popup Spotify player) ---------- */
 #music-widget{
   position:fixed; top:50%; right:0; transform:translateY(-50%); z-index:9997;
   font-family:'Space Mono', monospace; display:flex; align-items:center;
@@ -394,15 +394,20 @@ html{ scroll-behavior:smooth; }
   border-radius:50%; background:var(--blush-deep); box-shadow:0 0 6px rgba(227,155,174,0.7);
 }
 @keyframes vinyl-spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
-.vinyl-panel{
-  position:absolute; top:50%; right:56px; transform:translate(30px,-50%);
-  width:280px; opacity:0; pointer-events:none;
-  background:var(--paper); border:1px solid var(--line);
-  box-shadow:-8px 8px 0 rgba(43,42,28,0.3);
-  transition:transform .4s cubic-bezier(.2,.8,.3,1), opacity .3s ease;
+
+/* the actual player lives in a centered popup, sized for Spotify's full-size embed controls */
+.music-modal{
+  position:fixed; inset:0; z-index:9999;
+  display:flex; align-items:center; justify-content:center;
 }
-#music-widget.open .vinyl-panel{ transform:translate(0,-50%); opacity:1; pointer-events:auto; }
-#music-widget.open .vinyl-disc{ animation-duration:1.4s; }
+.music-modal[hidden]{ display:none; }
+.music-modal-backdrop{ position:absolute; inset:0; background:rgba(20,22,15,0.55); }
+.music-modal-panel{
+  position:relative; width:360px; max-width:90vw;
+  background:var(--paper); border:1px solid var(--line);
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  animation:tab-in .3s ease-out;
+}
 .retro-player-body{ padding:0.9rem 1rem 1.1rem; }
 .eq-bars{ display:flex; align-items:flex-end; gap:4px; height:26px; margin-bottom:0.6rem; }
 .eq-bars span{
@@ -422,14 +427,14 @@ html{ scroll-behavior:smooth; }
   font-family:'Press Start 2P', monospace; font-size:0.6rem; color:var(--blush-deep);
   letter-spacing:0.03em; margin-bottom:0.7rem;
 }
-.player-embed{ padding-top:0; height:152px; border:1px solid var(--line); }
+.player-embed{ padding-top:0; height:352px; border:1px solid var(--line); }
 
 /* ---------- fake boot sequence ---------- */
 #boot-screen{
   position:fixed; inset:0; z-index:99999;
   background:linear-gradient(180deg, var(--moss-deep) 0%, #1f2b1c 100%);
   color:var(--gold-soft); font-family:'Space Mono', monospace; font-size:0.9rem;
-  padding:3rem; transition:opacity .6s ease;
+  padding:3rem; transition:opacity 2s steps(10, end);
 }
 #boot-screen.boot-done{ opacity:0; pointer-events:none; }
 #boot-text{ white-space:pre-wrap; }
@@ -703,7 +708,11 @@ html{ scroll-behavior:smooth; }
   <div id="music-toggle" class="vinyl-tab" role="button" tabindex="0" aria-label="Open music player" aria-expanded="false">
     <div class="vinyl-disc"></div>
   </div>
-  <div id="music-player" class="vinyl-panel">
+</div>
+
+<div id="music-modal" class="music-modal" hidden>
+  <div class="music-modal-backdrop" id="music-modal-backdrop"></div>
+  <div class="music-modal-panel">
     <div class="win-titlebar">
       <span>aiashla_radio.exe</span>
       <div class="win-btns"><span id="music-close">×</span></div>
@@ -712,7 +721,7 @@ html{ scroll-behavior:smooth; }
       <div class="eq-bars"><span></span><span></span><span></span><span></span><span></span></div>
       <div class="player-label">NOW PLAYING: AiASHLA</div>
       <div class="embed-frame player-embed">
-        <iframe src="https://open.spotify.com/embed/artist/3oICt71chU9wj3e6T5hp71?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe src="https://open.spotify.com/embed/artist/3oICt71chU9wj3e6T5hp71?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
     </div>
   </div>
@@ -1126,28 +1135,33 @@ renderInvolvement();
   });
 })();
 
-/* Vinyl music player widget toggle. */
+/* Vinyl music player widget toggle, opens a centered popup player. */
 (function () {
-  const widget = document.getElementById('music-widget');
   const toggleBtn = document.getElementById('music-toggle');
+  const modal = document.getElementById('music-modal');
+  const backdrop = document.getElementById('music-modal-backdrop');
   const closeBtn = document.getElementById('music-close');
 
   function openPlayer() {
-    widget.classList.add('open');
+    modal.hidden = false;
     toggleBtn.setAttribute('aria-expanded', 'true');
   }
   function closePlayer() {
-    widget.classList.remove('open');
+    modal.hidden = true;
     toggleBtn.setAttribute('aria-expanded', 'false');
   }
 
   toggleBtn.addEventListener('click', () => {
-    widget.classList.contains('open') ? closePlayer() : openPlayer();
+    modal.hidden ? openPlayer() : closePlayer();
   });
   toggleBtn.addEventListener('keypress', e => {
     if (e.key === 'Enter' || e.key === ' ') toggleBtn.click();
   });
   closeBtn.addEventListener('click', closePlayer);
+  backdrop.addEventListener('click', closePlayer);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.hidden) closePlayer();
+  });
 })();
 
 /* Fake terminal boot sequence, shown once per browser session. */
@@ -1161,9 +1175,9 @@ renderInvolvement();
     '> SYSTEM BOOT ...',
     '> loading embedded_systems.dll ... OK',
     '> loading bio_design.sys ... OK',
-    '> loading caffeine_reserves.exe ... OK',
-    '> initializing whimsy.dll ... OK',
-    '> AISHANI_OS ready.'
+    '> loading aiashla.exe ... OK',
+    '> initializing whimsy_engineering.dll ... OK',
+    '> AISHANI_67_OS ready...!!'
   ];
   let completed = '';
   let lineIndex = 0, charIndex = 0;
@@ -1172,7 +1186,7 @@ renderInvolvement();
     if (lineIndex >= lines.length) {
       sessionStorage.setItem('bootShown', '1');
       setTimeout(() => bootScreen.classList.add('boot-done'), 500);
-      setTimeout(() => bootScreen.remove(), 1200);
+      setTimeout(() => bootScreen.remove(), 2600);
       return;
     }
     const line = lines[lineIndex];
