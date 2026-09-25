@@ -427,17 +427,37 @@ html{ scroll-behavior:smooth; }
   font-family:'Press Start 2P', monospace; font-size:0.6rem; color:var(--blush-deep);
   letter-spacing:0.03em; margin-bottom:0.7rem;
 }
-.player-embed{ padding-top:0; height:352px; border:1px solid var(--line); }
+.player-embed{ padding-top:0; height:352px; margin-bottom:0; border:1px solid var(--line); }
 
 /* ---------- fake boot sequence ---------- */
 #boot-screen{
   position:fixed; inset:0; z-index:99999;
   background:linear-gradient(180deg, var(--moss-deep) 0%, #1f2b1c 100%);
   color:var(--gold-soft); font-family:'Space Mono', monospace; font-size:0.9rem;
-  padding:3rem; transition:opacity 2s steps(10, end);
+  padding:3rem; transition:opacity 1s steps(10, end);
 }
 #boot-screen.boot-done{ opacity:0; pointer-events:none; }
 #boot-text{ white-space:pre-wrap; }
+
+/* ---------- shutdown easter egg (button or 2min idle) ---------- */
+#shutdown-screen{
+  position:fixed; inset:0; z-index:99999;
+  background:linear-gradient(180deg, var(--moss-deep) 0%, #1f2b1c 100%);
+  color:var(--gold-soft); font-family:'Space Mono', monospace; font-size:0.9rem;
+  padding:3rem; display:flex; flex-direction:column; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity 1s steps(10, end);
+}
+#shutdown-screen.active{ opacity:1; pointer-events:auto; }
+#shutdown-screen.collapsed{ background:#000; }
+#shutdown-screen.collapsed .shutdown-inner{ animation:crt-off .4s ease-in forwards; }
+@keyframes crt-off{
+  0%{ transform:scaleY(1); opacity:1; }
+  60%{ transform:scaleY(0.02); opacity:1; }
+  100%{ transform:scaleY(0.02) scaleX(0.02); opacity:0; }
+}
+#shutdown-text{ white-space:pre-wrap; }
+.shutdown-wake{ margin-top:2rem; font-size:0.7rem; color:var(--sage); opacity:0.7; }
+.hire-btn{ margin-top:1.2rem; }
 </style>
 </head>
 <body>
@@ -702,6 +722,7 @@ html{ scroll-behavior:smooth; }
   <p class="sign-off">[ END OF FILE ]</p>
   <p>© 2026 Aishani Sakalabhaktula</p>
   <p>Purdue University · Computer Engineering · Class of 2027</p>
+  <button id="hire-btn" class="header-cta hire-btn">&gt; ok i'm done reading, i'm so ready to hire Aishani!</button>
 </footer>
 
 <div id="music-widget">
@@ -728,6 +749,13 @@ html{ scroll-behavior:smooth; }
 </div>
 
 <div id="boot-screen"><pre id="boot-text"></pre></div>
+
+<div id="shutdown-screen">
+  <div class="shutdown-inner">
+    <pre id="shutdown-text"></pre>
+    <p class="shutdown-wake" id="shutdown-wake" hidden>click anywhere to power back on</p>
+  </div>
+</div>
 
 <script>
 /* One-panel-at-a-time portfolio navigation. The hash keeps every tab linkable. */
@@ -1164,12 +1192,11 @@ renderInvolvement();
   });
 })();
 
-/* Fake terminal boot sequence, shown once per browser session. */
+/* Fake terminal boot sequence, replayed on every page load. */
 (function () {
   const bootScreen = document.getElementById('boot-screen');
   const bootText = document.getElementById('boot-text');
   if (!bootScreen) return;
-  if (sessionStorage.getItem('bootShown')) { bootScreen.remove(); return; }
 
   const lines = [
     '> SYSTEM BOOT ...',
@@ -1184,9 +1211,8 @@ renderInvolvement();
 
   function typeStep() {
     if (lineIndex >= lines.length) {
-      sessionStorage.setItem('bootShown', '1');
       setTimeout(() => bootScreen.classList.add('boot-done'), 500);
-      setTimeout(() => bootScreen.remove(), 2600);
+      setTimeout(() => bootScreen.remove(), 1600);
       return;
     }
     const line = lines[lineIndex];
@@ -1202,6 +1228,78 @@ renderInvolvement();
     }
   }
   typeStep();
+})();
+
+/* Shutdown easter egg: reverse boot sequence + CRT power-off, via button or 2min idle. */
+(function () {
+  const screen = document.getElementById('shutdown-screen');
+  const textEl = document.getElementById('shutdown-text');
+  const wakeEl = document.getElementById('shutdown-wake');
+  const hireBtn = document.getElementById('hire-btn');
+  if (!screen) return;
+
+  const lines = [
+    '> saving session...',
+    '> closing whimsy_engineering.dll ...',
+    '> unmounting caffeine_reserves.exe ...',
+    '> AISHANI_OS shutting down ...',
+    '> thanks for stopping by!'
+  ];
+  let running = false;
+  let idleTimer;
+
+  function typeLines(onDone) {
+    let completed = '', li = 0, ci = 0;
+    function step() {
+      if (li >= lines.length) { onDone(); return; }
+      const line = lines[li];
+      ci++;
+      textEl.textContent = completed + line.slice(0, ci);
+      if (ci >= line.length) {
+        completed += line + '\n';
+        li++; ci = 0;
+        setTimeout(step, 220);
+      } else {
+        setTimeout(step, 18);
+      }
+    }
+    step();
+  }
+
+  function triggerShutdown() {
+    if (running) return;
+    running = true;
+    clearTimeout(idleTimer);
+    textEl.textContent = '';
+    wakeEl.hidden = true;
+    screen.classList.remove('collapsed');
+    screen.classList.add('active');
+    typeLines(() => {
+      setTimeout(() => {
+        screen.classList.add('collapsed');
+        setTimeout(() => { wakeEl.hidden = false; }, 500);
+      }, 600);
+    });
+  }
+
+  function wakeUp() {
+    if (!running) return;
+    running = false;
+    screen.classList.remove('active', 'collapsed');
+    resetIdleTimer();
+  }
+
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    if (!running) idleTimer = setTimeout(triggerShutdown, 120000);
+  }
+
+  screen.addEventListener('click', wakeUp);
+  if (hireBtn) hireBtn.addEventListener('click', triggerShutdown);
+  ['mousemove', 'keydown', 'scroll', 'click', 'touchstart'].forEach(evt => {
+    window.addEventListener(evt, () => { if (!running) resetIdleTimer(); }, { passive: true });
+  });
+  resetIdleTimer();
 })();
 </script>
 
