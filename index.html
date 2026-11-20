@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aishani Sakalabhaktula — Portfolio</title>
+<title>Aishani Sakalabhaktula - Portfolio</title>
+<meta name="description" content="Aishani Sakalabhaktula: Purdue computer engineering student exploring human-centered design, embedded systems, and solution engineering. Selected projects, design work, and experience.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* =========================================================
-   DESIGN TOKENS — retro-OS / terminal STYLE, fairy-garden
+  DESIGN TOKENS - retro-OS / terminal STYLE, fairy-garden
    PALETTE: moss green, blush pink, gold shimmer, cream.
    ========================================================= */
 :root{
@@ -458,11 +460,119 @@ html{ scroll-behavior:smooth; }
 #shutdown-text{ white-space:pre-wrap; }
 .shutdown-wake{ margin-top:2rem; font-size:0.7rem; color:var(--sage); opacity:0.7; }
 .hire-btn{ margin-top:1.2rem; }
+:root{
+  --cream:#F5F8F5; --paper:#FFFFFF; --sage:#E6EFE8;
+  --moss-deep:#254E43; --moss:#52776A; --ink:#283D37;
+  --ink-soft:#566B64; --blush-deep:#A54D6B; --leaf:#3F7057;
+}
+body{ font-family:'DM Sans',sans-serif; background:var(--cream); cursor:auto; }
+body::before{ display:none; }
+a, button, [role="tab"], .header-cta, .detail-head, .explore-link, .research-link{ cursor:pointer; }
+.card, .involve-card, .tag{ cursor:auto; }
+html{ scroll-padding-top:100px; }
+header{
+  text-align:left; padding:4.5rem max(2rem, calc((100% - 1100px) / 2)) 3.5rem;
+  background:#254E43; border-bottom:1px solid #79988B;
+}
+header::after{ opacity:.4; background-size:48px 48px; }
+header > :not(canvas){ position:relative; z-index:1; }
+header .star{ display:none; }
+.hero-copy{ max-width:790px; padding-right:100px; }
+.eyebrow{ font-family:'Space Mono',monospace; font-size:.7rem; letter-spacing:0; margin-bottom:1.2rem; color:#C2D8CA; }
+h1{ font-family:'Space Grotesk',sans-serif; font-size:3.15rem; line-height:1.12; letter-spacing:0; text-shadow:none; margin-bottom:1.3rem; overflow-wrap:anywhere; }
+h1 span{ display:block; }
+.tagline{ font-family:'DM Sans',sans-serif; font-size:.88rem; letter-spacing:0; color:#D6E4DC; font-weight:400; max-width:590px; }
+.role-focus{ display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.3rem; }
+.role-focus span{ font-family:'Space Mono',monospace; font-size:.71rem; padding:.35rem .7rem; border:1px solid #6C9181; color:#F7E5ED; border-radius:4px; background:#315A4E; }
+.thesis{ margin:0 0 1.6rem; padding:0; background:none; border:0; color:#F0F6F1; font-size:1.05rem; max-width:560px; }
+.header-cta{ border-radius:4px; background:#F4CDD8; border-color:#F4CDD8; box-shadow:none; color:#254E43; font-size:.78rem; padding:.8rem 1rem; }
+.header-cta:hover,.header-cta:focus-visible{ background:#FBE3EB; box-shadow:none; transform:translateY(-2px); }
+.hero-actions{ display:flex; align-items:center; flex-wrap:wrap; gap:1.3rem; margin-bottom:1.6rem; }
+.hero-actions .header-cta{ margin:0; }
+.secondary-cta{ color:#F2E2B9; font-size:.85rem; text-decoration:underline; text-underline-offset:5px; }
+.contact-info{ justify-content:flex-start; font-family:'DM Sans',sans-serif; gap:.6rem 1.3rem; font-size:.78rem; }
+nav{ background:#F9FCFA; border-bottom:1px solid var(--line); padding:.85rem 1.5rem; gap:.35rem; }
+nav a{ background:none; border:1px solid transparent; border-radius:4px; font-size:.75rem; padding:.5rem .85rem; }
+nav a:hover{ background:var(--sage); color:var(--moss-deep); box-shadow:none; }
+nav a.active,nav a[aria-selected="true"]{ background:var(--moss-deep); color:white; box-shadow:none; border-color:var(--moss-deep); }
+.container{ max-width:1100px; padding:3rem 2rem; scroll-margin-top:0; }
+.section-head{ margin-bottom:1.6rem; }
+.section-num{ font-family:'Space Mono',monospace; letter-spacing:0; font-size:.7rem; }
+h2{ font-family:'Space Grotesk',sans-serif; font-size:1.75rem; text-shadow:none; letter-spacing:0; }
+.card,.detail-card,.skill-category,.involve-card{ border-radius:6px; overflow:hidden; box-shadow:0 4px 14px #254E4306; }
+.card:hover,.involve-card:hover{ transform:none; box-shadow:0 5px 18px #254E4310; }
+.win-titlebar{ background:#EDF3EE; border-bottom:1px solid var(--line); color:var(--ink-soft); letter-spacing:0; font-size:.65rem; }
+.win-titlebar .win-btns{ opacity:.45; }
+.win-titlebar .win-btns span{ border-color:var(--moss); }
+.card h3,.detail-head h3,.skill-category h3,.involve-card h3{ font-family:'Space Grotesk',sans-serif; letter-spacing:0; }
+.card .subtitle{ color:var(--blush-deep); }
+.card li,.detail-body li,.involve-card p{ font-size:.94rem; }
+.about-card p{ font-size:1.02rem; line-height:1.9; max-width:850px; }
+.detail-head{ background:white; align-items:flex-start; padding:1.3rem 1.5rem .7rem; }
+.detail-head:hover{ background:#F6FAF7; }
+.detail-head h3{ font-size:1.15rem; }
+.detail-head .status{ background:var(--sage); color:var(--moss-deep); border-radius:3px; white-space:normal; letter-spacing:0; text-transform:none; }
+.project-preview{ padding:0 1.5rem 1.3rem; }
+.project-lens{ display:block; font-family:'Space Mono',monospace; font-size:.67rem; color:var(--blush-deep); margin-bottom:.55rem; }
+.project-preview p{ font-size:.94rem; max-width:800px; color:var(--ink-soft); }
+.detail-body{ background:#F7FAF7; }
+.detail-body.open{ max-height:none; }
+.detail-body:not(.open){ visibility:hidden; }
+.detail-body .tools-line{ color:var(--moss-deep); }
+.detail-body .links-row a,.involve-card a.explore-link{ border-radius:4px; background:var(--moss-deep); }
+.tag{ background:#F5F8F5; border-color:var(--line); border-radius:3px; }
+.tag:hover{ background:var(--sage); color:var(--moss-deep); box-shadow:none; }
+footer{ background:#254E43; border-top:0; }
+footer .sign-off{ font-family:'Space Mono',monospace; letter-spacing:0; }
+#music-widget{ top:auto; bottom:1rem; right:1rem; transform:none; }
+.vinyl-tab{ width:48px; height:48px; border-radius:50%; border:1px solid var(--gold-soft); }
+.vinyl-disc{ width:34px; height:34px; }
+#boot-screen[hidden],#shutdown-screen[hidden]{ display:none; }
+#shutdown-screen:not([hidden]){ opacity:1; pointer-events:auto; }
+.terminal-actions{ display:flex; justify-content:center; gap:.7rem; margin-top:.7rem; }
+.terminal-control{ width:40px; height:40px; border:1px solid #79988B; border-radius:4px; background:#315A4E; color:#FFF7E9; font-size:1.2rem; cursor:pointer; }
+.terminal-dismiss{ margin-top:1.5rem; padding:.65rem 1rem; background:var(--sage); border:1px solid var(--moss); border-radius:4px; color:var(--moss-deep); font:inherit; cursor:pointer; }
+#boot-screen,#shutdown-screen{ overflow:auto; padding:2rem; }
+#boot-text,#shutdown-text{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:.8rem; }
+#koi-pond{ position:absolute; right:0; top:0; width:30%; height:100%; pointer-events:none; z-index:0; }
+:focus-visible{ outline:3px solid #BF6B88; outline-offset:4px; }
+@media(max-width:900px){
+  .hero-copy{ max-width:650px; padding-right:60px; }
+  h1{ font-size:2.6rem; }
+}
+@media(max-width:600px){
+  header{ padding:2.5rem 1.25rem 2rem; }
+  .hero-copy{ padding-right:0; }
+  h1{ font-size:1.9rem; }
+  .eyebrow{ font-size:.62rem; }
+  .thesis{ font-size:.95rem; }
+  .tagline{ font-size:.8rem; margin-bottom:1.2rem; }
+  .role-focus span{ font-size:.64rem; }
+  nav{ justify-content:flex-start; flex-wrap:nowrap; overflow-x:auto; padding:.7rem 1rem; }
+  nav a{ flex:none; font-size:.7rem; padding:.45rem .65rem; }
+  .container{ padding:2rem 1.1rem; }
+  h2{ font-size:1.4rem; }
+  .card-body{ padding:1.3rem; }
+  .skills-container{ grid-template-columns:minmax(0,1fr); }
+  .detail-head{ flex-direction:column; gap:.7rem; padding:1.2rem 1.2rem .7rem; }
+  .project-preview{ padding:0 1.2rem 1.2rem; }
+  .detail-body.open{ padding:1.2rem; }
+  .contact-info{ gap:.4rem 1rem; }
+  footer{ padding:2rem 1.2rem 4.5rem; }
+  .hire-btn{ white-space:normal; max-width:100%; }
+  header{ padding-bottom:170px; }
+  #koi-pond{ top:auto; bottom:0; width:100%; height:160px; }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+  #glitter-trail-canvas{ display:none; }
+}
 </style>
 </head>
 <body>
 
 <header>
+  <canvas id="koi-pond" aria-hidden="true"></canvas>
   <span class="star" style="top:16%;left:8%;">✦</span>
   <span class="star" style="top:24%;right:10%; animation-delay:.6s;">✧</span>
   <span class="star" style="bottom:20%;left:14%; animation-delay:1.1s;">✦</span>
@@ -470,11 +580,17 @@ html{ scroll-behavior:smooth; }
   <span class="star" style="top:52%;left:4%; animation-delay:.3s;">✦</span>
   <span class="star" style="top:45%;right:5%; animation-delay:1.9s;">✧</span>
 
-  <!-- <span class="eyebrow">[ SYSTEM ONLINE ]</span>-->
-  <h1>AISHANI SAKALABHAKTULA</h1>
+  <div class="hero-copy">
+  <span class="eyebrow">AISHANI'S LITTLE CORNER OF THE INTERNET</span>
+  <h1><span>AISHANI</span>SAKALABHAKTULA</h1>
+  <div class="role-focus" aria-label="Roles of interest"><span>UX/UI &amp; human-centered design</span><span>Solution engineering</span></div>
   <p class="tagline">&gt; Computer Engineering :: AI/ML Concentration:: Embedded Systems &amp; Bio-Design :: Creative Designer</p>
   <p class="thesis">building things at the intersection of embedded systems and bio-design! (with the occasional cafe break ofc)<span class="cursor-blink">_</span></p>
-  <a class="header-cta" href="#featured-projects" data-tab-target="featured-projects">&gt; check out her projects!</a>
+  <div class="hero-actions">
+    <a class="header-cta" href="#featured-projects" data-tab-target="featured-projects">&gt; check out her projects!</a>
+    <a class="secondary-cta" href="#experience" data-tab-target="experience">work experience &#8599;</a>
+  </div>
+  </div>
   <div class="contact-info">
     <span>(832) 805-2120</span>
     <a href="mailto:aishmaan0511@gmail.com">aishmaan0511@gmail.com</a>
@@ -484,12 +600,12 @@ html{ scroll-behavior:smooth; }
 </header>
 
 <nav aria-label="Portfolio sections" role="tablist">
-  <a href="#about" role="tab">about.exe</a>
-  <a href="#education" role="tab">school.dll</a>
-  <a href="#experience" role="tab">work_history.sys</a>
-  <a href="#featured-projects" role="tab">featured.zip</a>
-  <a href="#skills" role="tab">skills.cfg</a>
-  <a href="#involvement" role="tab">clubs.ini</a>
+  <a href="#about" role="tab">About</a>
+  <a href="#featured-projects" role="tab">Selected work</a>
+  <a href="#experience" role="tab">Experience</a>
+  <a href="#skills" role="tab">Skills</a>
+  <a href="#education" role="tab">Education</a>
+  <a href="#involvement" role="tab">Beyond engineering</a>
 </nav>
 
 <div class="container">
@@ -548,10 +664,13 @@ html{ scroll-behavior:smooth; }
       <div class="win-titlebar"><span>ge_appliances.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>GE Appliances</h3>
-        <div class="subtitle">Embedded Systems Engineering Co-op (Accepted)</div>
+        <div class="subtitle">Embedded Systems Engineering Co-op - Wi-Fi/BLE Connected Team</div>
         <div class="date-location">Louisville, KY, August 2026 - December 2026</div>
         <ul>
-          <li>Selected to support GE Appliances' Connected Team, contributing to embedded connectivity development and a BLE code rewrite for smart appliances using Wi-Fi, MQTT, and HTTP.</li>
+          <li>Rewriting Bluetooth Low Energy (BLE) code in Embedded C for the Wi-Fi/BLE combo module used in nearly all GE Appliances connected appliances (750+ product models), enabling consumers to control appliances from their phones.</li>
+          <li>Identified latency bottlenecks in the BLE communication stack and restructured low-level firmware, reducing connection latency and connection failures by 25%.</li>
+          <li>Develop and maintain over-the-air (OTA) firmware update systems in C for Wi-Fi/BLE combo and Wi-Fi-only boards enabling reliable remote updates.</li>
+          <li>Wrote 70+ unit tests with CppUTest using Test-Driven Development (TDD), reaching 98% code coverage, and validated firmware through bench testing on an Agile team.</li>
         </ul>
       </div>
     </div>
@@ -560,12 +679,12 @@ html{ scroll-behavior:smooth; }
       <div class="win-titlebar"><span>md_anderson_eir.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>MD Anderson Cancer Center</h3>
-        <div class="subtitle">Computer Engineering EIR, IDEAS Lab for Surgical Innovation</div>
+        <div class="subtitle">Lead Computer Engineering Entrepreneur-in-Residence - IDEAS Lab for Surgical Innovation</div>
         <div class="date-location">Houston, TX, June 2026 - August 2026</div>
         <ul>
-          <li>Led computer/electrical engineering development for six medical device projects spanning interventional radiology, EEG systems, orofacial sensing, and catheter devices using embedded C++ and Arduino-based hardware
-          <li>Contributed to research and hardware debugging for an award-winning assistive device designed to support orofacial sensing research.</li>
-          <li>Observed 16 robotic and image-guided procedures and collaborated with physicians and multidisciplinary engineering teams to translate clinical needs into proof-of-concept embedded medical devices through the Stanford bio-design innovation process.</li>
+          <li>Led embedded C++ and microcontroller development for 6 medical device prototypes (IR, EEG, orofacial sensing) through 3+ design iterations each; authored and submitted an Invention Disclosure Report (IDR).</li>
+          <li>Programmed microcontroller timers and performed hardware debugging for a rotating Ferris-wheel mechanism in an orofacial sensing device for anesthetics research, achieving +/-5 ms timing accuracy; won a 3rd-place cash award out of 12 teams.</li>
+          <li>Observed 16 robotic and image-guided procedures; partnered with over 20 specialized physicians and engineers to turn clinical needs into proof-of-concept devices via Stanford Biodesign.</li>
         </ul>
       </div>
     </div>
@@ -574,10 +693,11 @@ html{ scroll-behavior:smooth; }
       <div class="win-titlebar"><span>md_anderson_data.log</span><div class="win-btns"><span>_</span><span>□</span><span>x</span></div></div>
       <div class="card-body">
         <h3>MD Anderson Cancer Center</h3>
-        <div class="subtitle">Data Engineering &amp; AI Intern, Genomic Medicine</div>
+        <div class="subtitle">Data Engineering &amp; AI Intern - Dept. of Genomic Medicine, Patient Mosaic</div>
         <div class="date-location">Houston, TX, June 2025 - August 2025</div>
         <ul>
-          <li>Used PySpark and NumPy within Palantir Foundry AIP Code Workbooks to design Python-based ETL pipelines that harmonize sample information forms and quality control tracker genomic datasets, and to build models and simulations for predictive analytics.</li>
+          <li>Built 4 Python ETL pipelines (PySpark, NumPy) in Palantir Foundry processing data for over 10,000 rare cancer patients.</li>
+          <li>Automated clinical data cleaning and alignment workflows, cutting analysis prep time from 6 hours to 30 minutes and helping physicians isolate tumor-specific issues faster.</li>
           <li>Collaborated with genomic researchers and data engineers (Dr. Scott Woodman, Dr. Sabitha Prabhakaran, and Mark Knafl) to align data workflows with biological context, assay variability, and research objectives for rare cancer studies (Project Mosaic).</li>
         </ul>
       </div>
@@ -602,7 +722,7 @@ html{ scroll-behavior:smooth; }
         <div class="subtitle">Research Assistant, Dr. Lisa Bosman</div>
         <div class="date-location">West Lafayette, IN, January 2024 - December 2024</div>
         <ul>
-          <li>Co-authored the peer-reviewed paper <a class="research-link" href="https://peer.asee.org/board-329-lessons-learned-nsf-reu-site-growing-entrepreneurially-minded-researchers-with-new-product-development-in-applied-energy" target="_blank" rel="noopener noreferrer">“Lessons Learned: NSF REU Site – Growing Entrepreneurially Minded Researchers with New Product Development in Applied Energy” ↗</a>, presented at the 2024 ASEE Conference.</li>
+          <li>Co-authored the peer-reviewed paper <a class="research-link" href="https://peer.asee.org/board-329-lessons-learned-nsf-reu-site-growing-entrepreneurially-minded-researchers-with-new-product-development-in-applied-energy" target="_blank" rel="noopener noreferrer">“Lessons Learned: NSF REU Site - Growing Entrepreneurially Minded Researchers with New Product Development in Applied Energy” ↗</a>, presented at the 2024 ASEE Conference.</li>
           <li>Supported qualitative research and analysis for <a class="research-link" href="https://peer.asee.org/using-photovoice-to-assess-technology-student-perceptions-of-virtual-reality-inside-and-outside-the-classroom" target="_blank" rel="noopener noreferrer">“Using Photovoice to Assess Technology Student Perceptions of Virtual Reality Inside and Outside the Classroom” ↗</a>, and presented findings at the Purdue Undergraduate Research Conference.</li>
         </ul>
       </div>
@@ -612,9 +732,6 @@ html{ scroll-behavior:smooth; }
   <!-- FEATURED / DETAILED PROJECTS - plug-in area #1 -->
   <section id="featured-projects">
     <div class="section-head"><span class="section-num">// 04</span><h2>FEATURED PROJECTS, IN DEPTH</h2></div>
-    <p class="intro-note">
-      Click on a project to open it up!
-    </p>
     <div id="detailed-projects-container"><!-- rendered by JS below --></div>
   </section>
 
@@ -629,6 +746,7 @@ html{ scroll-behavior:smooth; }
             <span class="tag">C</span><span class="tag">C++</span><span class="tag">C#</span>
             <span class="tag">Python</span><span class="tag">Java</span><span class="tag">R</span>
             <span class="tag">MATLAB</span><span class="tag">SystemVerilog</span>
+            <span class="tag">Lua (basic)</span>
           </div>
         </div>
       </div>
@@ -644,6 +762,34 @@ html{ scroll-behavior:smooth; }
             <span class="tag">Git/GitHub</span><span class="tag">Tekla Structures</span><span class="tag">Audacity</span>
             <span class="tag">Wi-Fi</span><span class="tag">Bluetooth</span><span class="tag">MQTT</span>
             <span class="tag">HTTP</span>
+            <span class="tag">Unreal Engine 5</span><span class="tag">Perforce</span>
+            <span class="tag">Jira</span><span class="tag">Agile</span><span class="tag">TDD</span>
+            <span class="tag">Stanford Biodesign</span>
+          </div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="card-body">
+          <h3>EMBEDDED &amp; FIRMWARE</h3>
+          <div class="skill-tags">
+            <span class="tag">Embedded C</span><span class="tag">ARM Cortex-M (RP2350)</span>
+            <span class="tag">Timers</span><span class="tag">ADC</span><span class="tag">PWM</span>
+            <span class="tag">DMA</span><span class="tag">I2C</span><span class="tag">SPI</span>
+            <span class="tag">UART</span><span class="tag">BLE</span><span class="tag">OTA Updates</span>
+            <span class="tag">PlatformIO</span><span class="tag">Finite State Machines</span>
+          </div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="card-body">
+          <h3>HARDWARE &amp; TEST</h3>
+          <div class="skill-tags">
+            <span class="tag">Schematics &amp; Datasheets</span>
+            <span class="tag">Oscilloscope/Logic Analyzer</span><span class="tag">Soldering</span>
+            <span class="tag">Hardware Debugging</span><span class="tag">Bench Testing</span>
+            <span class="tag">Test Automation</span><span class="tag">CppUTest</span>
+            <span class="tag">Prototyping</span><span class="tag">IR Sensors</span>
+            <span class="tag">MPU-6050</span><span class="tag">HX711</span>
           </div>
         </div>
       </div>
@@ -654,6 +800,7 @@ html{ scroll-behavior:smooth; }
             <span class="tag">Prompt Engineering</span><span class="tag">Claude Code</span><span class="tag">ChatGPT</span>
             <span class="tag">Copilot</span><span class="tag">Perplexity</span><span class="tag">Gemini</span>
             <span class="tag">SPSS</span><span class="tag">NVIVO</span><span class="tag">Codex</span>
+            <span class="tag">LLMs</span><span class="tag">Knowledge Graphs</span>
           </div>
         </div>
       </div>
@@ -687,13 +834,16 @@ html{ scroll-behavior:smooth; }
             <span class="tag">VIP: AI in Education (LLMs &amp; RAG)</span><span class="tag">Electromagnetism &amp; Optics</span>
             <span class="tag">Advanced C Programming</span><span class="tag">Industrial-Organizational Psychology</span>
             <span class="tag">Cognitive Psychology</span><span class="tag">Abnormal Psychology</span>
+            <span class="tag">Fundamentals of MEMS &amp; Micro-Integrated Systems (Spring '27)</span>
+            <span class="tag">Artificial Intelligence</span><span class="tag">The Entrepreneurial Engineer</span>
+            <span class="tag">Communication &amp; Collaboration</span><span class="tag">Social Psychology</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- INVOLVEMENT — plug-in area #2 (clickable links) -->
+  <!-- INVOLVEMENT - plug-in area #2 (clickable links) -->
   <section id="involvement">
     <div class="section-head"><span class="section-num">// 06</span><h2>CLUBS &amp; INTERESTS</h2></div>
     <p class="intro-note" style="font-size:0.88rem; color:var(--ink-soft); max-width:680px; margin-bottom:1.6rem;">
@@ -721,7 +871,11 @@ html{ scroll-behavior:smooth; }
   <p class="sign-off">[ END OF FILE ]</p>
   <p>© 2026 Aishani Sakalabhaktula</p>
   <p>Purdue University · Computer Engineering · Class of 2027</p>
-  <button id="hire-btn" class="header-cta hire-btn">&gt; ok i'm done reading, i'm so ready to hire Aishani!</button>
+  <a id="hire-btn" class="header-cta hire-btn" href="mailto:aishmaan0511@gmail.com">&gt; ok i'm done reading, i'm so ready to hire Aishani!</a>
+  <div class="terminal-actions">
+    <button id="replay-boot" class="terminal-control" type="button" title="Replay startup" aria-label="Replay startup">&#8635;</button>
+    <button id="power-off" class="terminal-control" type="button" title="Power down" aria-label="Power down">&#9211;</button>
+  </div>
 </footer>
 
 <div id="music-widget">
@@ -735,24 +889,27 @@ html{ scroll-behavior:smooth; }
   <div class="music-modal-panel">
     <div class="win-titlebar">
       <span>aiashla_radio.exe</span>
-      <div class="win-btns"><span id="music-close">×</span></div>
+      <button id="music-close" class="terminal-control" type="button" title="Close music player" aria-label="Close music player">&times;</button>
     </div>
     <div class="retro-player-body">
       <div class="eq-bars"><span></span><span></span><span></span><span></span><span></span></div>
       <div class="player-label">NOW PLAYING: AiASHLA</div>
       <div class="embed-frame player-embed">
-        <iframe src="https://open.spotify.com/embed/artist/3oICt71chU9wj3e6T5hp71?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe title="AiASHLA on Spotify" src="https://open.spotify.com/embed/artist/3oICt71chU9wj3e6T5hp71?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
+      <a class="research-link" href="https://open.spotify.com/artist/3oICt71chU9wj3e6T5hp71" target="_blank" rel="noopener noreferrer">Open in Spotify &#8599;</a>
     </div>
   </div>
 </div>
 
-<div id="boot-screen"><pre id="boot-text"></pre></div>
-
-<div id="shutdown-screen">
+<div id="boot-screen" hidden>
+  <pre id="boot-text"></pre>
+  <button id="boot-skip" class="terminal-dismiss" type="button">Skip startup</button>
+</div>
+<div id="shutdown-screen" hidden>
   <div class="shutdown-inner">
     <pre id="shutdown-text"></pre>
-    <p class="shutdown-wake" id="shutdown-wake" hidden>click anywhere to power back on</p>
+    <button id="shutdown-wake" class="terminal-dismiss" type="button">Power back on</button>
   </div>
 </div>
 
@@ -829,18 +986,50 @@ openPortfolioTab(location.hash.slice(1) || 'about', false);
      description  (string)
      highlights   (array of strings)
      links        (array of {label, url}, optional)
-     mediaNote    (string, optional) — placeholder text shown if there's no real embed
-     embed        (string, optional) — raw HTML (usually an <iframe>) for a real, working
+    mediaNote    (string, optional) - placeholder text shown if there's no real embed
+    embed        (string, optional) - raw HTML (usually an <iframe>) for a real, working
                                         embed. When present, this replaces the mediaNote
                                         placeholder with the actual embedded content.
    ========================================================================= */
 const projectData = [
   {
+    title: "GAINS: Game-Dev AI NPC Simulation - Senior Design",
+    lens: "INTERACTIVE ENVIRONMENTS / HUMAN BEHAVIOR RESEARCH",
+    status: "August 2026 - Present",
+    tools: "Unreal Engine 5 · C++ · Perforce · Behavior/Knowledge Trees · Blackboards · UML",
+    description: "Developing AI-driven NPCs and an interactive UE5 environment for human behavior research.",
+    highlights: [
+      "Using Behavior/Knowledge Trees, Blackboards, UML, and data-driven modeling to develop AI-driven NPCs and the interactive environment."
+    ]
+  },
+  {
+    title: "SumoBot Competition - Team Lead, Finalist",
+    lens: "AUTONOMOUS SYSTEMS / TEAM LEADERSHIP",
+    status: "August 2026 - December 2026",
+    tools: "C · Adafruit Metro Express · IR Sensors · Finite State Machines · Soldering",
+    description: "Led a 3-person team to the finals in a GE Appliances co-op cohort of about 200 with an autonomous sumo robot.",
+    highlights: [
+      "Wrote the full finite state machine (hunt, attack, defend, border detection), designed the hunting strategy, soldered buzzers for in-match music, and integrated IR sensors into state transitions."
+    ]
+  },
+  {
+    title: "AI in Education: Personalized Tutoring System - VIP",
+    lens: "ADAPTIVE LEARNING / RESPONSIBLE AI",
+    status: "January 2026 - May 2026",
+    tools: "Python · LLMs · Knowledge Graphs",
+    description: "Prototyped an LLM-powered adaptive tutor using knowledge graphs to model student learning paths, patterns, and progress.",
+    highlights: [
+      "Evaluated privacy and bias risks while prototyping the personalized tutoring system."
+    ]
+  },
+  {
     title: "MAASive Miku: Embedded Rhythm Game",
-    status: "team of 4 · ECE 362",
+    lens: "INTERACTION DESIGN / HARDWARE + SOFTWARE INTEGRATION",
+    status: "ECE 362 - August 2025 - December 2025",
     tools: "C · RP2350 Microcontroller · I²C · SPI · DMA · PWM Audio · ADC · NeoTrellis · PlatformIO",
     description: "A Hatsune Miku-themed, real-time embedded rhythm game built for the RP2350 microcontroller and an Adafruit NeoTrellis keypad, built as part of Purdue's ECE 362 Embedded Systems course.",
     highlights: [
+      "SPARK Challenge finalist.",
       "Programmed low-level I²C communication with the Seesaw co-processor to decode keypad input and control 16 NeoPixel LEDs.",
       "Developed timing-accurate LED animations synchronized with audio playback using DMA-driven PWM, ensuring consistent real-time performance.",
       "Worked in a team of four to integrate hardware input, LED feedback, and audio timing into one cohesive game loop."
@@ -852,12 +1041,13 @@ const projectData = [
     // Real LinkedIn embed, pulled from the post's ••• menu → "Embed this post". LinkedIn's
     // embed is a fixed-size iframe (504x1099 here), so embedMaxWidth + embedAspect keep it
     // at its natural portrait proportions instead of getting stretched into a 16:9 box.
-    embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7410007205367967745?collapsed=1" allowfullscreen title="Embedded post"></iframe>',
+    embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7410007205367967745?collapsed=1" loading="lazy" allowfullscreen title="MAASive Miku project post on LinkedIn"></iframe>',
     embedMaxWidth: "504px",
     embedAspect: "193%"
   },
   {
     title: "Unity 3D Platformer Game",
+    lens: "INTERACTIVE EXPERIENCES / PROTOTYPING",
     status: "team of 2 · personal project",
     tools: "Unity Game Engine · C# · 3D Asset Integration",
     description: "\"I got hit by a truck and teleported into a fantasy world?!\" - a 3D adventure platformer featuring environmental exploration, mini-games, and obstacle-based mechanics.",
@@ -868,21 +1058,23 @@ const projectData = [
     links: [
       { label: "Full gameplay video", url: "https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/view?usp=sharing" }
     ],
-    embed: '<iframe src="https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/preview" allow="autoplay" allowfullscreen></iframe>'
+    embed: '<iframe src="https://drive.google.com/file/d/1pAB7kBDdoP8nmLjyZITuFOWEpSaUtHqn/preview" loading="lazy" title="Unity platformer gameplay video" allow="autoplay" allowfullscreen></iframe>'
   },
   {
     title: "FRO.m Magazine - Graphic Design",
+    lens: "VISUAL DESIGN / EDITORIAL STORYTELLING",
     status: "Fashion and Retail Organization (FRO)",
     tools: "Graphic Design · Editorial Layout · Figma · Affinity",
-    description: "FRO.m is Purdue's student-run fashion magazine, published on Substack. I'm on the graphic design team, working on the visuals that bring each issue's fashion journalism to life — from layout to illustration to photo editing.",
+    description: "FRO.m is Purdue's student-run fashion magazine, published on Substack. I'm on the graphic design team, working on the visuals that bring each issue's fashion journalism to life - from layout to illustration to photo editing.",
     highlights: [
       "Designed graphics and visual layouts for FRO.m Magazine issues, translating written fashion journalism into cohesive visual storytelling.",
       "Collaborated with writers and editors to make sure each piece's design matched its tone and subject."
     ],
     links: [
-      { label: "Read FRO.m on Substack", url: "https://frompurdue.substack.com/" }
+      { label: "Read FRO.m on Substack", url: "https://frompurdue.substack.com/" },
+      { label: "Open design preview", url: "https://drive.google.com/file/d/1raBkPydr4driM_YwtDPjEFJX52QZeyO0/view" }
     ],
-    embed: '<iframe src="https://drive.google.com/file/d/1raBkPydr4driM_YwtDPjEFJX52QZeyO0/preview" allow="autoplay" allowfullscreen></iframe>',
+    embed: '<iframe src="https://drive.google.com/file/d/1raBkPydr4driM_YwtDPjEFJX52QZeyO0/preview" loading="lazy" title="FRO.m magazine design preview" allow="autoplay" allowfullscreen></iframe>',
     //mediaNote: "Add a favorite spread or cover you designed here"
   }
 
@@ -891,7 +1083,7 @@ const projectData = [
      ------------------------------------------------------------
      Copy the block below, fill it in, and add a comma above it
      to attach it to the array. status, links, mediaNote, and
-     embed are all optional — delete the ones you don't need.
+    embed are all optional - delete the ones you don't need.
 
   ,{
     title: "Your Project Title",
@@ -935,24 +1127,27 @@ function renderProjects() {
       const maxWidth = proj.embedMaxWidth ? `max-width:${proj.embedMaxWidth}; margin-left:auto; margin-right:auto;` : '';
       const sizing = proj.embedCropHeight
         ? `padding-top:0; height:${proj.embedCropHeight};`
-        : `padding-top:${proj.embedAspect || '56.25%'};`;
+        : `padding-top:0; aspect-ratio:100 / ${parseFloat(proj.embedAspect || '56.25%')};`;
       mediaHtml = `<div class="embed-frame" style="${sizing} ${maxWidth}">${proj.embed}</div>`;
     } else {
-      mediaHtml = `<div class="media-slot">${proj.mediaNote || 'Add an image or video here'}</div>`;
+      mediaHtml = proj.mediaNote ? `<div class="media-slot">${proj.mediaNote}</div>` : '';
     }
 
     card.innerHTML = `
-      <div class="detail-head" role="button" tabindex="0" aria-expanded="false" data-index="${i}">
+      <div class="detail-head" role="button" tabindex="0" aria-expanded="false" aria-controls="project-details-${i}" data-index="${i}">
         <h3>${proj.title}</h3>
         <div style="display:flex; align-items:center; gap:1rem;">
           ${proj.status ? `<span class="status">${proj.status}</span>` : ''}
           <span class="detail-toggle">+</span>
         </div>
       </div>
-      <div class="detail-body" data-index="${i}">
+      <div class="project-preview">
+        <span class="project-lens">${proj.lens || ''}</span>
+        <p>${proj.description || ''}</p>
+      </div>
+      <div class="detail-body" id="project-details-${i}" data-index="${i}">
         <div class="tools-line">${proj.tools || ''}</div>
         ${mediaHtml}
-        <p style="margin-bottom:1rem;">${proj.description || ''}</p>
         <ul>${(proj.highlights || []).map(h => `<li>${h}</li>`).join('')}</ul>
         ${linksHtml ? `<div class="links-row">${linksHtml}</div>` : ''}
       </div>
@@ -968,8 +1163,11 @@ function renderProjects() {
       head.setAttribute('aria-expanded', String(!expanded));
       body.classList.toggle('open');
     });
-    head.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') head.click();
+    head.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        head.click();
+      }
     });
   });
 }
@@ -977,18 +1175,18 @@ function renderProjects() {
 renderProjects();
 
 /* =========================================================================
-   INVOLVEMENT DATA — Clubs & Interests, each with an optional link
+  INVOLVEMENT DATA - Clubs & Interests, each with an optional link
    -------------------------------------------------------------------------
    Every card in "Clubs & Interests" is generated from this array, laid out
    in an even 2-column grid with equal-height cards (buttons all line up
    along the bottom no matter how long each description is).
 
    Fields:
-     name   (string)            — club/activity name
-     role   (string)            — your role or title there
-     emoji  (string)            — one emoji shown at the top of the card
-     desc   (string)            — one or two sentence description
-     url    (string, optional)  — link to learn more
+    name   (string)            - club/activity name
+    role   (string)            - your role or title there
+    emoji  (string)            - one emoji shown at the top of the card
+    desc   (string)            - one or two sentence description
+    url    (string, optional)  - link to learn more
    ========================================================================= */
 const involvementData = [
   {
@@ -1028,7 +1226,7 @@ const involvementData = [
 
      To add a brand new club/activity card, copy the block below,
      fill it in, and add a comma above it to attach it to the array.
-     With 4 cards the grid stays a neat 2x2 — adding a 5th will wrap
+    With 4 cards the grid stays a neat 2x2 - adding a 5th will wrap
      to a 3rd row, still evenly spaced.
 
   ,{
@@ -1068,8 +1266,9 @@ renderInvolvement();
 </script>
 
 <script>
-/* Pink glitter cursor trail — spawns tiny sparkle pixels that drift and fade. */
+/* Pink glitter cursor trail - spawns tiny sparkle pixels that drift and fade. */
 (function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const canvas = document.createElement('canvas');
   canvas.id = 'glitter-trail-canvas';
   canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
@@ -1144,6 +1343,125 @@ renderInvolvement();
 </script>
 
 <script>
+(function () {
+  const canvas = document.getElementById('koi-pond');
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const fish = [
+    { phase:0, size:1, color:'#DF866D', orbit:.8 },
+    { phase:2.6, size:.8, color:'#E3ABBC', orbit:.65 },
+    { phase:4.7, size:.65, color:'#D5AF68', orbit:.9 }
+  ];
+  let width = 0;
+  let height = 0;
+  let frame = null;
+  let visible = true;
+
+  function ellipse(horizontal, vertical, radiusX, radiusY, color, angle = 0) {
+    context.beginPath();
+    context.ellipse(horizontal, vertical, radiusX, radiusY, angle, 0, Math.PI * 2);
+    context.fillStyle = color;
+    context.fill();
+  }
+
+  function drawFish(item, time) {
+    const angle = item.phase + time * .16;
+    const orbitX = width * .28 * item.orbit;
+    const orbitY = height * .32 * item.orbit;
+    const horizontal = width * .48 + Math.cos(angle) * orbitX;
+    const vertical = height * .5 + Math.sin(angle) * orbitY;
+    const heading = Math.atan2(Math.cos(angle) * orbitY, -Math.sin(angle) * orbitX);
+    const tailSwing = Math.sin(time * 2.8 + item.phase) * .22;
+    const scale = item.size * Math.min(width / 280, height / 250, 1.15);
+    context.save();
+    context.translate(horizontal, vertical);
+    context.rotate(heading);
+    context.scale(scale, scale);
+    context.save();
+    context.translate(-32, 0);
+    context.rotate(tailSwing);
+    context.beginPath();
+    context.moveTo(6, 0);
+    context.bezierCurveTo(-10, -5, -12, -24, -26, -19);
+    context.quadraticCurveTo(-19, -4, -26, 0);
+    context.quadraticCurveTo(-19, 4, -26, 19);
+    context.bezierCurveTo(-12, 24, -10, 5, 6, 0);
+    context.fillStyle = '#F0D8C8';
+    context.fill();
+    context.restore();
+    ellipse(2, -15, 15, 6, '#E6C7BB', -.65 - tailSwing);
+    ellipse(2, 15, 15, 6, '#E6C7BB', .65 + tailSwing);
+    context.save();
+    context.beginPath();
+    context.moveTo(31, 0);
+    context.bezierCurveTo(32, -19, -3, -28, -35, 0);
+    context.bezierCurveTo(-3, 28, 32, 19, 31, 0);
+    context.fillStyle = '#FFF7E9';
+    context.fill();
+    context.clip();
+    ellipse(17, -4, 10, 10, item.color, -.3);
+    ellipse(-6, 8, 12, 9, item.color, -.6);
+    ellipse(-21, -5, 7, 8, item.color);
+    context.beginPath();
+    context.moveTo(-26, 0);
+    context.quadraticCurveTo(-2, -4, 9, 0);
+    context.strokeStyle = '#52776A38';
+    context.lineWidth = 1;
+    context.stroke();
+    context.restore();
+    ellipse(23, -8, 2, 2, '#254138');
+    ellipse(23, 8, 2, 2, '#254138');
+    context.beginPath();
+    context.moveTo(29, -4);
+    context.quadraticCurveTo(40, -8, 38, -12);
+    context.moveTo(29, 4);
+    context.quadraticCurveTo(40, 8, 38, 12);
+    context.strokeStyle = '#F0D8C8';
+    context.lineWidth = 1;
+    context.stroke();
+    context.restore();
+  }
+
+  function draw(timestamp) {
+    frame = null;
+    const time = motionPreference.matches ? 0 : timestamp / 1000;
+    context.clearRect(0, 0, width, height);
+    for (let ripple = 0; ripple < 3; ripple++) {
+      context.beginPath();
+      context.ellipse(width * .48, height * .5, width * (.2 + ripple * .095), height * (.23 + ripple * .1), -.15, 0, Math.PI * 2);
+      context.strokeStyle = '#C5DCC016';
+      context.lineWidth = 1;
+      context.stroke();
+    }
+    fish.forEach(item => drawFish(item, time));
+    if (!motionPreference.matches && visible && !document.hidden) frame = requestAnimationFrame(draw);
+  }
+
+  function refresh() {
+    if (frame !== null) cancelAnimationFrame(frame);
+    draw(performance.now());
+  }
+
+  new ResizeObserver(() => {
+    width = canvas.clientWidth;
+    height = canvas.clientHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = width * pixelRatio;
+    canvas.height = height * pixelRatio;
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    refresh();
+  }).observe(canvas);
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    refresh();
+  }).observe(canvas);
+  motionPreference.addEventListener('change', refresh);
+  document.addEventListener('visibilitychange', refresh);
+})();
+</script>
+
+<script>
 /* Parallax twinkle-stars: subtle drift toward the cursor within the header. */
 (function () {
   const headerEl = document.querySelector('header');
@@ -1171,11 +1489,16 @@ renderInvolvement();
 
   function openPlayer() {
     modal.hidden = false;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'AiASHLA music player');
     toggleBtn.setAttribute('aria-expanded', 'true');
+    closeBtn.focus();
   }
   function closePlayer() {
     modal.hidden = true;
     toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.focus();
   }
 
   toggleBtn.addEventListener('click', () => {
@@ -1191,13 +1514,19 @@ renderInvolvement();
   });
 })();
 
-/* Fake terminal boot sequence, replayed on every page load. */
 (function () {
   const bootScreen = document.getElementById('boot-screen');
   const bootText = document.getElementById('boot-text');
-  if (!bootScreen) return;
-
-  const lines = [
+  const shutdownScreen = document.getElementById('shutdown-screen');
+  const shutdownText = document.getElementById('shutdown-text');
+  const replayButton = document.getElementById('replay-boot');
+  const powerButton = document.getElementById('power-off');
+  const skipButton = document.getElementById('boot-skip');
+  const wakeButton = document.getElementById('shutdown-wake');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let timer;
+  let returnFocus;
+  const startupLines = [
     '> SYSTEM BOOT ...',
     '> loading embedded_systems.dll ... OK',
     '> loading bio_design.sys ... OK',
@@ -1205,100 +1534,50 @@ renderInvolvement();
     '> initializing whimsy_engineering.dll ... OK',
     '> AISHANI_67_OS ready...!!'
   ];
-  let completed = '';
-  let lineIndex = 0, charIndex = 0;
-
-  function typeStep() {
-    if (lineIndex >= lines.length) {
-      setTimeout(() => bootScreen.classList.add('boot-done'), 500);
-      setTimeout(() => bootScreen.remove(), 1600);
-      return;
-    }
-    const line = lines[lineIndex];
-    charIndex++;
-    bootText.textContent = completed + line.slice(0, charIndex);
-    if (charIndex >= line.length) {
-      completed += line + '\n';
-      lineIndex++;
-      charIndex = 0;
-      setTimeout(typeStep, 220);
-    } else {
-      setTimeout(typeStep, 18);
-    }
-  }
-  typeStep();
-})();
-
-/* Shutdown easter egg: reverse boot sequence + CRT power-off, via button or 2min idle. */
-(function () {
-  const screen = document.getElementById('shutdown-screen');
-  const textEl = document.getElementById('shutdown-text');
-  const wakeEl = document.getElementById('shutdown-wake');
-  const hireBtn = document.getElementById('hire-btn');
-  if (!screen) return;
-
-  const lines = [
+  const shutdownLines = [
     '> saving session...',
     '> closing whimsy_engineering.dll ...',
     '> unmounting caffeine_reserves.exe ...',
     '> AISHANI_OS shutting down ...',
     '> thanks for stopping by!'
   ];
-  let running = false;
-  let idleTimer;
 
-  function typeLines(onDone) {
-    let completed = '', li = 0, ci = 0;
-    function step() {
-      if (li >= lines.length) { onDone(); return; }
-      const line = lines[li];
-      ci++;
-      textEl.textContent = completed + line.slice(0, ci);
-      if (ci >= line.length) {
-        completed += line + '\n';
-        li++; ci = 0;
-        setTimeout(step, 220);
-      } else {
-        setTimeout(step, 18);
+  function dismiss() {
+    clearTimeout(timer);
+    bootScreen.hidden = true;
+    shutdownScreen.hidden = true;
+    if (returnFocus) returnFocus.focus({ preventScroll:true });
+    returnFocus = null;
+  }
+
+  function play(screen, text, lines, control, autoDismiss, moveFocus) {
+    dismiss();
+    returnFocus = moveFocus ? document.activeElement : null;
+    screen.hidden = false;
+    text.textContent = '';
+    if (moveFocus) control.focus({ preventScroll:true });
+    const message = lines.join('\n');
+    let position = 0;
+    function typeNext() {
+      position = reducedMotion.matches ? message.length : Math.min(position + 4, message.length);
+      text.textContent = message.slice(0, position);
+      if (position < message.length) {
+        timer = setTimeout(typeNext, 20);
+      } else if (autoDismiss) {
+        timer = setTimeout(dismiss, 300);
       }
     }
-    step();
+    typeNext();
   }
 
-  function triggerShutdown() {
-    if (running) return;
-    running = true;
-    clearTimeout(idleTimer);
-    textEl.textContent = '';
-    wakeEl.hidden = true;
-    screen.classList.remove('collapsed');
-    screen.classList.add('active');
-    typeLines(() => {
-      setTimeout(() => {
-        screen.classList.add('collapsed');
-        setTimeout(() => { wakeEl.hidden = false; }, 500);
-      }, 600);
-    });
-  }
-
-  function wakeUp() {
-    if (!running) return;
-    running = false;
-    screen.classList.remove('active', 'collapsed');
-    resetIdleTimer();
-  }
-
-  function resetIdleTimer() {
-    clearTimeout(idleTimer);
-    if (!running) idleTimer = setTimeout(triggerShutdown, 120000);
-  }
-
-  screen.addEventListener('click', wakeUp);
-  if (hireBtn) hireBtn.addEventListener('click', triggerShutdown);
-  ['mousemove', 'keydown', 'scroll', 'click', 'touchstart'].forEach(evt => {
-    window.addEventListener(evt, () => { if (!running) resetIdleTimer(); }, { passive: true });
+  replayButton.addEventListener('click', () => play(bootScreen, bootText, startupLines, skipButton, true, true));
+  powerButton.addEventListener('click', () => play(shutdownScreen, shutdownText, shutdownLines, wakeButton, false, true));
+  skipButton.addEventListener('click', dismiss);
+  wakeButton.addEventListener('click', dismiss);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && (!bootScreen.hidden || !shutdownScreen.hidden)) dismiss();
   });
-  resetIdleTimer();
+  if (!reducedMotion.matches) play(bootScreen, bootText, startupLines, skipButton, true, false);
 })();
 </script>
 
